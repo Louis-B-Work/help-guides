@@ -1,0 +1,186 @@
+/* Redesign mode, built from CF247-Redesign-Design-System.md and the mockup at https://louis-b-work.github.io/cf247/.
+   Everything is scoped to html[data-design="redesign"], so removing the attribute restores the current site styling.
+   Type: Overused Grotesk only. Aeonik is deliberately not used (trial licence, internal evaluation only). */
+
+@font-face { font-family: "Overused Grotesk"; src: url("https://louis-b-work.github.io/cf247/fonts/overused-grotesk/OverusedGrotesk-VF.woff2") format("woff2"); font-weight: 300 399; font-style: normal; font-display: swap; size-adjust: 106.5%; }
+@font-face { font-family: "Overused Grotesk"; src: url("https://louis-b-work.github.io/cf247/fonts/overused-grotesk/OverusedGrotesk-VF.woff2") format("woff2"); font-weight: 400 549; font-style: normal; font-display: swap; size-adjust: 105%; }
+@font-face { font-family: "Overused Grotesk"; src: url("https://louis-b-work.github.io/cf247/fonts/overused-grotesk/OverusedGrotesk-VF.woff2") format("woff2"); font-weight: 550 649; font-style: normal; font-display: swap; size-adjust: 104.3%; }
+@font-face { font-family: "Overused Grotesk"; src: url("https://louis-b-work.github.io/cf247/fonts/overused-grotesk/OverusedGrotesk-VF.woff2") format("woff2"); font-weight: 650 799; font-style: normal; font-display: swap; size-adjust: 103.1%; }
+
+html[data-design="redesign"] {
+  /* Tokens */
+  --purple: #6905f2;
+  --purple-80: #8737f5;
+  --purple-30: #d2b4fb;
+  --purple-10: #f0e6fe;
+  --ink: #160132;
+  --ink-muted: rgba(22, 1, 50, .7);
+  --on-purple-muted: rgba(255, 255, 255, .8);
+  --lime: #8ef205;
+  --hero-base: #8432f4;
+  --mint: #dcf8ef;
+  --trustpilot: #00b67a;
+  --ring-card: rgba(105, 5, 242, .1);
+  --ring-on-dark: rgba(255, 255, 255, .15);
+  --halo-light: rgba(105, 5, 242, .3);
+  --halo-on-dark: rgba(255, 255, 255, .3);
+  --shadow-card: 0 28px 70px -48px rgba(22, 1, 50, .55);
+  --shadow-input: 0 20px 45px -28px rgba(22, 1, 50, .8);
+  --brand: 16px;
+  --inner: 10px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --edge: clamp(20px, 6vw, 112px);
+  --chevron-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23160132' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 2l4 4-4 4'/%3E%3C/svg%3E");
+  --chevron-purple: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%236905f2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 2l4 4-4 4'/%3E%3C/svg%3E");
+
+  /* ---- Type: one family, body 400, headings 700, no tracking ---- */
+  & body, & input, & button { font-family: "Overused Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  & body { color: var(--ink); background: #fff; line-height: 1.625; }
+  & h1, & h2, & h3 { font-weight: 700; letter-spacing: 0; }
+  & main h2 { font-size: clamp(1.85rem, 3.8vw, 3.5rem); line-height: 1.04; color: var(--purple); text-wrap: balance; }
+  & main p { color: var(--ink-muted); }
+  @media (max-width: 639px) { & #topics-h { font-size: clamp(1.1rem, 5.6vw, 1.5rem); } }
+
+  /* ---- Focus ---- */
+  & :focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; border-radius: 6px; }
+  & .hero-bg :focus-visible, & #help-cta :focus-visible, & footer :focus-visible, & .calc-tile:focus-visible,
+  & #popular-h ~ [data-track] > article :focus-visible, & .cog :focus-visible { outline-color: var(--lime); }
+
+  /* ---- Layout: page edges, content cap, alternating bands ---- */
+  & main > section:not(.hero-bg) { padding: 3.5rem var(--edge); }
+  @media (min-width: 768px) { & main > section:not(.hero-bg) { padding-block: 5rem; } }
+  & main .max-w-screen-lg, & main .max-w-3xl { max-width: 1320px; }
+  & main #hero-search { max-width: 48rem; }
+  & main > section:has(#topics-h), & main > section:has(#recent-h), & main > section:has(#calc-h) { background: var(--purple-10); }
+  & main > section:has(#popular-h), & main > section:has(#video-h) { background: #fff; }
+
+  /* ---- Hero: purple holds for 30% then fades to hero-base, no other gradient ---- */
+  & .hero-bg { background: linear-gradient(to bottom, var(--purple) 0, var(--purple) 30%, var(--hero-base) 100%); }
+  & .hero-bg::before { display: none; }
+  & #page-title { font-size: clamp(1.6rem, 8.6vw, 2.5rem); line-height: .98; color: #fff; white-space: nowrap; }
+  @media (min-width: 640px) { & #page-title { font-size: clamp(1.5rem, 7.2vw, 70px); } }
+  & .hero-bg p { color: #fff; }
+  & .hero-bg p.text-sm { color: var(--on-purple-muted); font-size: 1rem; max-width: 30rem; }
+  & .bg-tint { background: var(--purple-10); }
+
+  /* ---- Entry fields are full pills with the lime circle button ---- */
+  & .ai-field, & #ai-dock .ai-field { border-radius: 9999px; }
+  & #hero-search .ai-field { box-shadow: var(--shadow-input); }
+  & .ai-field input { border-radius: 9999px; }
+  /* No green ring on a selected search field: one clean focus outline on the pill instead. */
+  & .ai-field input:focus, & .ai-field input:focus-visible { outline: none; box-shadow: none; --tw-ring-shadow: 0 0 #0000; }
+  & .ai-field:focus-within { outline: 3px solid var(--purple); outline-offset: 3px; }
+  /* Lime circle with a purple magnifier in every state (no black). The dock rules in styles.css are id-based, so these match their specificity. */
+  & .ai-field button[type=submit], & #ai-dock .ai-field button, & #ai-dock .ai-field:hover button, & #ai-dock .ai-field:focus-within button {
+    background: var(--lime); color: var(--purple); border-radius: 9999px; width: 2.5rem; height: 2.5rem;
+  }
+  & .ai-field button[type=submit]:hover, & #ai-dock .ai-field button:hover { filter: brightness(.94); }
+  & .ai-panel { border-radius: var(--brand); box-shadow: var(--shadow-card), 0 0 0 1px var(--ring-card); }
+  & .ai-panel a { border-radius: var(--inner); }
+  & .ai-panel a:hover { background: var(--purple-10); color: var(--purple); }
+  & .ai-panel p, & .ai-panel .text-gray-500 { color: var(--ink-muted); }
+
+  /* ---- Topic chips ---- */
+  & #topics-h ~ ul a { background: #fff; color: var(--ink); font-weight: 600; box-shadow: 0 0 0 1px var(--ring-card); transition: background .5s var(--ease), transform .2s var(--ease); }
+  & #topics-h ~ ul a:hover, & #topics-h ~ ul a:focus-visible { background: var(--lime); color: var(--ink); }
+  & #topics-h ~ ul a:active { transform: scale(.97); }
+  & #topics-h ~ p a { color: var(--purple); font-weight: 600; }
+
+  /* ---- Carousel controls ---- */
+  & [data-controls] button.bg-gray-300 { background: var(--purple-30); }
+  & [data-controls] button[aria-current] { background: var(--purple); }
+  & [data-controls] button.border { border: 0; box-shadow: inset 0 0 0 2px var(--purple); color: var(--purple); border-radius: 9999px; background: transparent; }
+  & [data-controls] button.border:hover:not(:disabled) { background: var(--lime); box-shadow: inset 0 0 0 2px var(--lime); color: var(--ink); }
+
+  /* ---- Most popular: dark photo cards (radius-brand, ring-on-dark, shadow-card) ---- */
+  & #popular-h ~ [data-track] > article {
+    position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end;
+    min-height: 360px; border-radius: var(--brand); overflow: hidden; background: var(--ink); color: #fff;
+    box-shadow: 0 0 0 1px var(--ring-on-dark), var(--shadow-card);
+  }
+  & #popular-h ~ [data-track] > article > img {
+    position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; z-index: -2;
+    transition: transform .7s var(--ease);
+  }
+  & #popular-h ~ [data-track] > article:hover > img { transform: scale(1.04); }
+  & #popular-h ~ [data-track] > article::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(to top, rgba(22, 1, 50, .92) 0%, rgba(22, 1, 50, .6) 38%, rgba(22, 1, 50, 0) 68%);
+  }
+  & #popular-h ~ [data-track] > article > div { padding: 1.5rem; }
+  & #popular-h ~ [data-track] > article span { background: rgba(255, 255, 255, .18); color: #fff; border-radius: var(--inner); font-size: .875rem; font-weight: 600; padding: .2rem .7rem; }
+  & #popular-h ~ [data-track] > article h3 { font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.02; }
+  & #popular-h ~ [data-track] > article h3 a {
+    background: linear-gradient(var(--lime), var(--lime)) left bottom / 0% 3px no-repeat; padding-bottom: 2px;
+    transition: background-size .5s var(--ease); text-decoration: none;
+  }
+  & #popular-h ~ [data-track] > article:hover h3 a, & #popular-h ~ [data-track] > article h3 a:focus-visible { background-size: 100% 3px; }
+  & #popular-h ~ [data-track] > article p { color: var(--on-purple-muted); font-size: 1rem; }
+
+  /* ---- Recently updated ---- */
+  & #recent-track img, & #recent-track li a > span[aria-hidden] { border-radius: var(--inner); }
+  & #recent-track .font-medium { color: var(--ink); font-weight: 600; }
+  & #recent-track .text-gray-500 { color: var(--ink-muted); }
+  & #recent-track .new-badge { background: var(--mint); color: var(--ink); border-radius: var(--inner); font-weight: 600; }
+  & #recent-track li a { border-radius: var(--inner); padding-inline: .5rem; transition: background .3s var(--ease); }
+  & #recent-track li a:hover { background: #fff; }
+  & #recent-track li.border-b { border-color: rgba(105, 5, 242, .15); }
+
+  /* ---- Video guides: light cards (purple-10 fill on a white band) ---- */
+  & #video-h ~ p a { color: var(--purple); font-weight: 600; }
+  & .vid { background: var(--purple-10); border: 0; border-radius: var(--brand); box-shadow: 0 0 0 1px var(--ring-card), var(--shadow-card); transition: transform .3s var(--ease); }
+  & .vid:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px var(--ring-card), var(--shadow-card); }
+  & .vid .font-semibold { color: var(--purple); font-weight: 700; }
+  & .vid p.text-gray-600 { color: var(--ink-muted); }
+  & .vplay { background: #fff; color: var(--purple); }
+  & .vdur { background: rgba(22, 1, 50, .75); border-radius: var(--inner); padding: 1px 8px; }
+
+  /* ---- Calculators: dark purple cards with a white chevron chip ---- */
+  & .calc-tile { background: var(--purple); color: #fff; border-radius: var(--brand); box-shadow: 0 0 0 1px var(--ring-on-dark), var(--shadow-card); transition: transform .3s var(--ease), background .5s var(--ease); }
+  & .calc-tile:hover { filter: none; background: var(--purple-80); transform: translateY(-2px); }
+  & .calc-tile h3 { font-size: clamp(1.15rem, 1.6vw, 1.5rem); line-height: 1.1; }
+  & .calc-tile p { color: var(--on-purple-muted); }
+  & .calc-tile svg { color: #fff; }
+  & .calc-tile::after {
+    width: 2.25rem; height: 2.25rem; border: 0; border-radius: 9999px; right: 1.1rem;
+    background: #fff var(--chevron-purple) center / 12px no-repeat; transform: translateY(-50%);
+  }
+  & .calc-tile:hover::after { right: .9rem; }
+
+  /* ---- Final CTA panel: purple panel, glows, one lime button ---- */
+  & #help-cta {
+    margin: 3.5rem var(--edge); padding: 2rem 1.75rem; border-radius: var(--brand); flex-direction: column; gap: 1.5rem; position: relative; overflow: hidden;
+    background: radial-gradient(60% 90% at 0% 0%, rgba(142, 242, 5, .25), transparent 60%), radial-gradient(60% 90% at 100% 100%, rgba(165, 105, 247, .55), transparent 60%), var(--purple);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .2), 0 42px 100px -60px rgba(22, 1, 50, .9);
+  }
+  @media (min-width: 640px) { & #help-cta { padding: 2.5rem 2rem; } }
+  @media (min-width: 1024px) { & #help-cta { padding: 3.5rem 2.5rem; } }
+  @media (min-width: 768px) { & #help-cta { margin-block: 5rem; } }
+  & #help-cta h2 { color: #fff; font-size: clamp(1.5rem, 6.5vw, 2rem); line-height: 1.05; }
+  @media (min-width: 768px) { & #help-cta h2 { font-size: clamp(2.25rem, 4.2vw, 3.75rem); line-height: .98; } }
+  & #help-cta a {
+    display: inline-flex; align-items: center; gap: 1rem; background: var(--lime); color: var(--ink); font-weight: 700; font-size: 1.125rem;
+    border-radius: 9999px; padding: .35rem .35rem .35rem 1.6rem; min-height: 3.6rem;
+    box-shadow: 0 0 0 3px var(--purple), 0 0 0 5px var(--halo-on-dark); transition: transform .2s var(--ease), filter .3s var(--ease);
+  }
+  & #help-cta a:hover { filter: brightness(.96); }
+  & #help-cta a:active { transform: scale(.97); }
+  & #help-cta a svg { box-sizing: content-box; width: .8rem; height: .8rem; margin: 0; padding: .7rem; background: #fff; color: var(--ink); border-radius: 9999px; }
+
+  /* ---- Links / footer ---- */
+  & main a.text-primary { color: var(--purple); }
+  & footer { background: var(--ink); }
+  & footer h3 { color: #fff; }
+
+  @media (prefers-reduced-motion: reduce) {
+    & * { transition: none !important; }
+    & .vid:hover, & .calc-tile:hover, & #topics-h ~ ul a:active, & #help-cta a:active { transform: none; }
+    & #popular-h ~ [data-track] > article:hover > img { transform: none; }
+  }
+}
+
+/* Closing panel: title plus a smaller subtitle (body-lead) */
+html[data-design="redesign"] {
+  & #help-cta p { color: var(--on-purple-muted); font-size: 1rem; line-height: 1.5; margin-top: .6rem; }
+  @media (min-width: 768px) { & #help-cta p { font-size: 1.0625rem; } }
+}
