@@ -1,4 +1,4 @@
-// Generates category.html (the "Am I Eligible?" guide category page) so every card, list item and link is real HTML
+// Generates am-i-eligible/index.html (the "Am I Eligible?" guide category page) so every card, list item and link is real HTML
 // in the file, not injected by script. Header, footer, logo sprite, search strip and dock are reused from index.html.
 // Run from the project root:  node tools/build-category.js
 const fs = require("fs");
@@ -230,5 +230,14 @@ ${dock}
 </html>
 `;
 
-fs.writeFileSync("category.html", `<!doctype html>\n<html lang="en-GB">\n${head}\n${body}`);
-console.log(`category.html written: ${POPULAR.length} popular cards, ${GUIDES.length} list items`);
+// The page is served at /am-i-eligible/, one level below the site root, so shared assets are referenced with ../
+const OUT_DIR = "am-i-eligible";
+const html = `<!doctype html>
+<html lang="en-GB">
+${head}
+${body}`
+  .replace(/(href|src)="assets\//g, '$1="../assets/')
+  .replace(/href="\.\/"/g, 'href="../"');
+fs.mkdirSync(OUT_DIR, { recursive: true });
+fs.writeFileSync(`${OUT_DIR}/index.html`, html);
+console.log(`${OUT_DIR}/index.html written: ${POPULAR.length} popular cards, ${GUIDES.length} list items`);
