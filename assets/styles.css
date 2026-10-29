@@ -192,3 +192,15 @@ body { font-family: "Helvetica Neue", "Helvetica Neue Custom", Helvetica, Arial,
 /* Topic chips share the calculator tiles' square corners */
 #topics-h ~ ul a { border-radius: 0; }
 @media (min-width: 640px) { #topics-h ~ ul a { min-height: 3.5rem; } }
+
+/* Current styling: one 6px corner radius (the "Get in touch" button) for every card, button and field.
+   Redesign mode keeps the design system's own radii. */
+html:not([data-design="redesign"]) {
+  & #popular-h ~ [data-track] > article { border-radius: 6px; overflow: hidden; }
+  & #popular-h ~ [data-track] > article span, & .tag-chip { border-radius: 6px; }
+  & .vid, & .calc-tile, & .cat-card, & #topics-h ~ ul a { border-radius: 6px; }
+  & .vid { overflow: hidden; }
+  & .ai-field, & #ai-dock .ai-field, & .ai-field input, & .ai-panel { border-radius: 6px; }
+  & .ai-field button[type=submit], & #ai-dock .ai-field button, & .pg-btn { border-radius: 6px; }
+  & :is(#recent-track, #guide-list) img, & :is(#recent-track, #guide-list) li a > span[aria-hidden] { border-radius: 6px; }
+}
