@@ -51,7 +51,16 @@
     return b;
   });
   panel.append(seg, el("p", "cog-note", "Compare today’s styling with the redesign. Your choice is saved in this browser."));
+  // Link to the side-by-side compare page (control replica of the live /guides vs the new design), found relative to this script.
+  const self = document.querySelector('script[src$="cog.js"]');
+  if (self) {
+    const compare = el("a", "cog-link", "Side by side with live /guides →");
+    compare.href = new URL("../compare/", self.src).href;
+    panel.append(compare);
+  }
   wrap.append(btn, panel);
+  // ?embed=1 (used by the compare page) hides the cog: the design is chosen outside the frame.
+  wrap.hidden = new URLSearchParams(location.search).get("embed") === "1";
   document.body.appendChild(wrap);
 
   // Redesign copy follows the design system (sentence case, no em dashes); the current site keeps its original wording.

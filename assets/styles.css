@@ -204,3 +204,6 @@ html:not([data-design="redesign"]) {
   & .ai-field button[type=submit], & #ai-dock .ai-field button, & .pg-btn { border-radius: 6px; }
   & :is(#recent-track, #guide-list) img, & :is(#recent-track, #guide-list) li a > span[aria-hidden] { border-radius: 6px; }
 }
+.cog-link { display: block; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, .2); font-size: .8125rem; font-weight: 600; color: #8EF205; text-decoration: none; }
+.cog-link:hover { text-decoration: underline; }
+.cog[hidden] { display: none; }
