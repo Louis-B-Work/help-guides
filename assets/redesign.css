@@ -216,3 +216,8 @@ html[data-design="redesign"] {
   & .cat-card-video:hover::after { background: var(--lime) var(--chevron-ink) center / 12px no-repeat; }
   & .cat-more { font-weight: 600; }
 }
+
+/* Topic chips take the same 16px card corners as the calculator tiles */
+html[data-design="redesign"] {
+  & #topics-h ~ ul a { border-radius: var(--brand); }
+}

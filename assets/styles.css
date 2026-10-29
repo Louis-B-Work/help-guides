@@ -188,3 +188,7 @@ body { font-family: "Helvetica Neue", "Helvetica Neue Custom", Helvetica, Arial,
 .cat-card::after { content: ""; position: absolute; right: 1.5rem; top: 50%; width: .6rem; height: .6rem; border-top: 2px solid #6905F2; border-right: 2px solid #6905F2; transform: translateY(-50%) rotate(45deg); }
 .cat-card-video { background: #F5EEFE; }
 .cat-more { display: inline-flex; align-items: center; margin-top: .5rem; font-size: .875rem; font-weight: 600; color: #6905F2; }
+
+/* Topic chips share the calculator tiles' square corners */
+#topics-h ~ ul a { border-radius: 0; }
+@media (min-width: 640px) { #topics-h ~ ul a { min-height: 3.5rem; } }
