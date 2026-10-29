@@ -170,3 +170,11 @@ body { font-family: "Helvetica Neue", "Helvetica Neue Custom", Helvetica, Arial,
 .cog-opt[aria-pressed="true"] { background: #8EF205; color: #160132; }
 .cog-note { margin-top: 12px; font-size: .75rem; line-height: 1.4; color: rgba(255, 255, 255, .7); }
 @media (prefers-reduced-motion: reduce) { .cog { transition: none; } }
+
+/* Calculator tiles alternate between the brand purple and a lighter variant so neighbours read as separate cards.
+   One column: every second tile is lighter. Two columns: a checkerboard (tiles 2 and 3 lighter). */
+.calc-tile:nth-child(even) { background: #8737F5; }
+@media (min-width: 640px) {
+  .calc-tile:nth-child(even) { background: #6905F2; }
+  .calc-tile:nth-child(2), .calc-tile:nth-child(3) { background: #8737F5; }
+}
