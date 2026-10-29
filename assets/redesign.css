@@ -188,15 +188,3 @@ html[data-design="redesign"] {
   & #help-cta p { color: var(--on-purple-muted); font-size: 1rem; line-height: 1.5; margin-top: .6rem; }
   @media (min-width: 768px) { & #help-cta p { font-size: 1.0625rem; } }
 }
-
-/* Calculator tiles: purple and purple-80 alternate (same pattern as the current styling); hover swaps them. */
-html[data-design="redesign"] {
-  & .calc-tile:nth-child(even) { background: var(--purple-80); }
-  & .calc-tile:nth-child(even):hover { background: var(--purple); }
-  @media (min-width: 640px) {
-    & .calc-tile:nth-child(even) { background: var(--purple); }
-    & .calc-tile:nth-child(even):hover { background: var(--purple-80); }
-    & .calc-tile:nth-child(2), & .calc-tile:nth-child(3) { background: var(--purple-80); }
-    & .calc-tile:nth-child(2):hover, & .calc-tile:nth-child(3):hover { background: var(--purple); }
-  }
-}
