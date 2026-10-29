@@ -53,8 +53,8 @@ html[data-design="redesign"] {
   @media (min-width: 768px) { & main > section:not(.hero-bg) { padding-block: 5rem; } }
   & main .max-w-screen-lg, & main .max-w-3xl { max-width: 1320px; }
   & main #hero-search { max-width: 48rem; }
-  & main > section:has(#topics-h), & main > section:has(#recent-h), & main > section:has(#calc-h) { background: var(--purple-10); }
-  & main > section:has(#popular-h), & main > section:has(#video-h) { background: #fff; }
+  & main > section:has(#topics-h), & main > section:has(#recent-h), & main > section:has(#calc-h), & main > section:has(#all-h) { background: var(--purple-10); }
+  & main > section:has(#popular-h), & main > section:has(#video-h), & main > section:has(#cross-h) { background: #fff; }
 
   /* ---- Hero: purple holds for 30% then fades to hero-base, no other gradient ---- */
   & .hero-bg { background: linear-gradient(to bottom, var(--purple) 0, var(--purple) 30%, var(--hero-base) 100%); }
@@ -62,7 +62,7 @@ html[data-design="redesign"] {
   & #page-title { font-size: clamp(1.6rem, 8.6vw, 2.5rem); line-height: .98; color: #fff; white-space: nowrap; }
   @media (min-width: 640px) { & #page-title { font-size: clamp(1.5rem, 7.2vw, 70px); } }
   & .hero-bg p { color: #fff; }
-  & .hero-bg p.text-sm { color: var(--on-purple-muted); font-size: 1rem; max-width: 30rem; }
+  & .hero-bg p.text-sm { color: var(--on-purple-muted); font-size: 1rem; max-width: 36rem; }
   & .bg-tint { background: var(--purple-10); }
 
   /* ---- Entry fields are full pills with the lime circle button ---- */
@@ -121,13 +121,13 @@ html[data-design="redesign"] {
   & #popular-h ~ [data-track] > article p { color: var(--on-purple-muted); font-size: 1rem; }
 
   /* ---- Recently updated ---- */
-  & #recent-track img, & #recent-track li a > span[aria-hidden] { border-radius: var(--inner); }
-  & #recent-track .font-medium { color: var(--ink); font-weight: 600; font-size: 1.125rem; line-height: 1.375; }
-  & #recent-track .text-gray-500 { color: var(--ink-muted); }
-  & #recent-track .new-badge { background: var(--mint); color: var(--ink); border-radius: var(--inner); font-weight: 600; }
-  & #recent-track li a { border-radius: var(--inner); padding-inline: .5rem; transition: background .3s var(--ease); }
-  & #recent-track li a:hover { background: #fff; }
-  & #recent-track li.border-b { border-color: rgba(105, 5, 242, .15); }
+  & :is(#recent-track, #guide-list) img, & :is(#recent-track, #guide-list) li a > span[aria-hidden] { border-radius: var(--inner); }
+  & :is(#recent-track, #guide-list) .font-medium { color: var(--ink); font-weight: 600; font-size: 1.125rem; line-height: 1.375; }
+  & :is(#recent-track, #guide-list) .text-gray-500 { color: var(--ink-muted); }
+  & :is(#recent-track, #guide-list) .new-badge { background: var(--mint); color: var(--ink); border-radius: var(--inner); font-weight: 600; }
+  & :is(#recent-track, #guide-list) li a { border-radius: var(--inner); padding-inline: .5rem; transition: background .3s var(--ease); }
+  & :is(#recent-track, #guide-list) li a:hover { background: #fff; }
+  & :is(#recent-track, #guide-list) li.border-b { border-color: rgba(105, 5, 242, .15); }
 
   /* ---- Video guides: light cards (purple-10 fill on a white band) ---- */
   & #video-h ~ p a { color: var(--purple); font-weight: 600; }
@@ -187,4 +187,32 @@ html[data-design="redesign"] {
 html[data-design="redesign"] {
   & #help-cta p { color: var(--on-purple-muted); font-size: 1rem; line-height: 1.5; margin-top: .6rem; }
   @media (min-width: 768px) { & #help-cta p { font-size: 1.0625rem; } }
+}
+
+/* Guide category page modules */
+html[data-design="redesign"] {
+  --chevron-white: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 2l4 4-4 4'/%3E%3C/svg%3E");
+
+  & .tag-chip { background: #fff; color: var(--ink); border-radius: var(--inner); box-shadow: 0 0 0 1px var(--ring-card); }
+
+  /* Pagination: pill buttons, round page numbers, lime on hover */
+  & .pg-btn { border: 0; border-radius: 9999px; color: var(--purple); background: #fff; box-shadow: inset 0 0 0 2px var(--purple); transition: background .3s var(--ease); }
+  & .pg-btn:hover:not(:disabled) { background: var(--lime); box-shadow: inset 0 0 0 2px var(--lime); color: var(--ink); }
+  & .pg-num { min-width: 2.5rem; padding: 0; }
+  & .pg-num[aria-current="page"] { background: var(--purple); box-shadow: none; color: #fff; }
+  & .pg-status { color: var(--ink-muted); }
+
+  /* Cross-link cards: purple-10 cards with a purple chevron chip; the video card is dark purple */
+  & .cat-card { background: var(--purple-10); border: 0; border-radius: var(--brand); padding-right: 4.25rem; box-shadow: 0 0 0 1px var(--ring-card), var(--shadow-card); transition: transform .3s var(--ease); }
+  & .cat-card:hover { border: 0; transform: translateY(-3px); box-shadow: 0 0 0 1px var(--ring-card), var(--shadow-card); }
+  & .cat-card h3 { color: var(--purple); font-size: 1.5rem; line-height: 1.2; }
+  & .cat-card p { color: var(--ink-muted); font-size: 1rem; }
+  & .cat-card::after { width: 2.25rem; height: 2.25rem; border: 0; right: 1.1rem; border-radius: 9999px; background: var(--purple) var(--chevron-white) center / 12px no-repeat; transform: translateY(-50%); transition: background-color .3s var(--ease); }
+  & .cat-card:hover::after { background: var(--lime) var(--chevron-ink) center / 12px no-repeat; }
+  & .cat-card-video { background: var(--purple); box-shadow: 0 0 0 1px var(--ring-on-dark), var(--shadow-card); }
+  & .cat-card-video h3 { color: #fff; }
+  & .cat-card-video p, & .cat-card-video .cat-more { color: var(--on-purple-muted); }
+  & .cat-card-video::after { background: #fff var(--chevron-purple) center / 12px no-repeat; }
+  & .cat-card-video:hover::after { background: var(--lime) var(--chevron-ink) center / 12px no-repeat; }
+  & .cat-more { font-weight: 600; }
 }
