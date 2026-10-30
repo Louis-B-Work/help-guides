@@ -81,3 +81,26 @@ body.wf { color: #111; background: #fff; }
   .wf-pill { padding: .9rem 1.4rem; }
   .wf-calc h3 { font-size: 1.25rem; }
 }
+
+/* "Am I Eligible?" category wireframe (from the category-page wireframe image) */
+.wf-crumbs { background: #F5EEFE; padding: .5rem 1rem; font-size: .75rem; }
+.wf-crumbs a { color: #6905F2; font-weight: 600; text-decoration: none; }
+.wf-title { margin: 0; padding: 2.5rem 1rem 0; text-align: center; font-size: 3rem; font-weight: 700; line-height: 1.15; color: #000; }
+.wf-search.wf-plain { margin: 1.5rem auto 0; }
+.wf-intro-p { max-width: 48rem; margin: 1.5rem auto 0; padding: 0 1rem; font-size: .875rem; }
+.wf-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin: 1rem 0 1.5rem; }
+.wf-filters .wf-pill { padding: .8rem 1.6rem; font-size: .75rem; }
+.wf-listrow { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid #e5e7eb; }
+.wf-listrow h3 { flex: 1; font-size: 1rem; font-weight: 700; }
+.wf-listrow span { color: #6905F2; font-size: 1.25rem; }
+.wf-narrow { max-width: 48rem; margin: 0 auto; }
+.wf-center-h { text-align: center; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; }
+.wf-two { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 56rem; margin: 0 auto; }
+@media (min-width: 768px) { .wf-two { grid-template-columns: 1fr 1fr; } }
+.wf-panel { margin-top: 3rem; padding: 2.5rem 1rem; background: #F5EEFE; text-align: center; }
+.wf-panel h2 { font-size: 1.5rem; font-weight: 700; }
+.wf-panel .wf-btn { margin-top: 1rem; }
+.wf-panel small { display: block; margin-top: 1rem; font-size: .75rem; }
+@media (max-width: 639px) { .wf-title { font-size: 2.25rem; } }
+
+.wf-wrap.wf-section { padding-inline: 1rem; }

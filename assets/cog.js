@@ -54,8 +54,9 @@
   // Link to the side-by-side compare page (control replica of the live /guides vs the new design), found relative to this script.
   const self = document.querySelector('script[src$="cog.js"]');
   if (self) {
-    const compare = el("a", "cog-link", "Side by side with live /guides →");
-    compare.href = new URL("../compare/", self.src).href;
+    const category = location.pathname.includes("am-i-eligible");
+    const compare = el("a", "cog-link", category ? "Side by side with live page →" : "Side by side with live /guides →");
+    compare.href = new URL(category ? "../compare-am-i-eligible/" : "../compare/", self.src).href;
     panel.append(compare);
   }
   wrap.append(btn, panel);

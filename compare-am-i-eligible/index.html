@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Am I Eligible? redesign comparison | Car Finance 247</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { --purple: #6905F2; --purple-10: #F0E6FE; --purple-30: #D2B4FB; --page: #ECE6F7; --lime: #8EF205; }
+  * { box-sizing: border-box; }
+  html { overflow-y: scroll; } /* always reserve the scrollbar so the column maths does not change after the frames load */
+  body { margin: 0; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 15px; background: var(--page); color: #000; }
+  a { color: var(--purple); }
+  button { font: inherit; cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--purple); outline-offset: 2px; }
+
+  /* Slim top bar; the navigation and controls drop down over the page from the menu button, so the frames keep the full height */
+  .topwrap { position: relative; z-index: 20; }
+  .top { display: flex; align-items: center; gap: 12px; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e3dcf2; }
+  .top h1 { margin: 0; font-size: .9375rem; }
+  .top .showing { margin-left: auto; font-size: .8125rem; color: rgba(0,0,0,.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .menu-btn { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 2px solid var(--purple); border-radius: 99px; background: #fff; color: var(--purple); font-weight: 700; font-size: .8125rem; }
+  .menu-btn[aria-expanded="true"] { background: var(--purple); color: #fff; }
+  .menu-btn svg { width: 16px; height: 16px; }
+  #menu { position: absolute; left: 0; right: 0; top: 100%; background: #fff; box-shadow: 0 14px 30px -12px rgba(22, 1, 50, .45); border-bottom: 1px solid #e3dcf2; }
+  #menu[hidden] { display: none; }
+
+  nav.pages { display: flex; gap: 4px; padding: 0 16px; background: #fff; font-size: 13px; border-bottom: 1px solid #e3dcf2; }
+  nav.pages a { padding: 6px 12px; margin: 5px 0; border-radius: 99px; font-weight: 700; text-decoration: none; }
+  nav.pages a.on { background: var(--purple); color: #fff; }
+
+  header.bar { display: grid; gap: 10px; padding: 10px 16px; background: #fff; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+  .seg { display: inline-flex; border: 2px solid var(--purple); }
+  .seg button { border: 0; padding: 6px 14px; font-weight: 700; color: var(--purple); background: #fff; }
+  .seg button[aria-pressed="true"] { background: var(--purple); color: #fff; }
+  .row label { display: inline-flex; align-items: center; gap: 6px; font-size: .875rem; }
+  .row .live { margin-left: auto; font-size: .8125rem; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { display: grid; gap: 2px; text-align: left; padding: 8px 14px; border-radius: 10px; border: 2px solid var(--purple-30); background: #fff; color: #000; opacity: .8; }
+  .chip b { font-size: .9375rem; }
+  .chip span { font-size: .8125rem; color: rgba(0,0,0,.65); }
+  .chip[aria-pressed="true"] { border-color: var(--purple); background: var(--purple-10); opacity: 1; }
+
+  main { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; align-items: flex-start; padding: 20px 16px 48px; }
+  .col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .cap { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; justify-content: space-between; }
+  .cap h2 { margin: 0; font-size: .9375rem; }
+  .cap a { font-size: .8125rem; text-decoration: none; }
+  .cap a:hover { text-decoration: underline; }
+  .dev { position: relative; border: 1px solid #000; border-radius: 18px; overflow: hidden; background: #fff; }
+  .dev iframe { position: absolute; top: 0; left: 0; border: 0; background: #fff; transform-origin: top left; }
+</style>
+</head>
+<body>
+<div class="topwrap">
+<div class="top">
+  <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg>Menu</button>
+  <h1>Am I Eligible? redesign comparison</h1>
+  <span class="showing" id="showing"></span>
+</div>
+<div id="menu" hidden>
+<nav class="pages" aria-label="Pages">
+  <a class="on" aria-current="page" href="./">Comparison</a>
+  <a href="../control-am-i-eligible/">Control page</a>
+  <a href="../wireframe-am-i-eligible/">Wireframe page</a>
+  <a href="../am-i-eligible/">New page</a>
+  <a href="../compare/" style="margin-left:auto">&larr; Guides homepage comparison</a>
+</nav>
+<header class="bar">
+  <div class="row">
+    <div class="seg" id="mode" role="group" aria-label="Layout"><button type="button" data-v="single">Single</button><button type="button" data-v="side">Side by side</button></div>
+    <div class="seg" id="device" role="group" aria-label="Device size"><button type="button" data-v="mobile">Mobile 375</button><button type="button" data-v="desktop">Desktop 1280</button></div>
+    <label><input type="checkbox" id="sync" checked> Sync scroll</label>
+    <a class="live" href="https://www.carfinance247.co.uk/guide/am-i-eligible" target="_blank" rel="noopener">Open live /guide/am-i-eligible &#8599;</a>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="Versions to show"></div>
+</header>
+</div>
+</div>
+<main id="cols"></main>
+<script>
+(() => {
+  const SIZES = { mobile: [375, 812], desktop: [1280, 800] };
+  const VARIANTS = [
+  {
+    "id": "control",
+    "title": "Control (live)",
+    "note": "Replica of today's Am I Eligible",
+    "src": "../control-am-i-eligible/"
+  },
+  {
+    "id": "current",
+    "title": "Redesign (current brand)",
+    "note": "New layout in today's look",
+    "src": "../am-i-eligible/?design=current"
+  },
+  {
+    "id": "redesign",
+    "title": "Redesign (new brand)",
+    "note": "New layout in the new brand guidelines",
+    "src": "../am-i-eligible/?design=redesign"
+  },
+  {
+    "id": "wireframe",
+    "title": "SEO wireframe",
+    "note": "Layout from the category wireframe",
+    "src": "../wireframe-am-i-eligible/"
+  }
+];
+  const DEFAULT_SEL = "control,current"; // shown on a plain load: control (live) next to the redesign in the current brand
+  const $ = (id) => document.getElementById(id);
+  const qs = new URLSearchParams(location.search);
+  const state = {
+    mode: qs.get("mode") === "single" ? "single" : "side",
+    device: qs.get("device") === "desktop" ? "desktop" : "mobile",
+    sel: (qs.get("v") || DEFAULT_SEL).split(",").filter((id) => VARIANTS.some((v) => v.id === id))
+  };
+  if (!state.sel.length) state.sel = DEFAULT_SEL.split(",");
+  let lock = false;
+
+  // Keep the address clean: only choices that differ from the defaults are written, so a plain load adds nothing.
+  const DEFAULTS = { mode: "side", device: "mobile", v: DEFAULT_SEL };
+  function persist() {
+    const u = new URL(location.href);
+    const now = { mode: state.mode, device: state.device, v: state.sel.join(",") };
+    for (const k in DEFAULTS) { if (now[k] === DEFAULTS[k]) u.searchParams.delete(k); else u.searchParams.set(k, now[k]); }
+    history.replaceState(null, "", u);
+  }
+
+  function renderChips() {
+    $("chips").replaceChildren();
+    VARIANTS.forEach((v) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.dataset.id = v.id;
+      b.setAttribute("aria-pressed", String(state.sel.includes(v.id)));
+      b.innerHTML = "<b></b><span></span>";
+      b.firstChild.textContent = v.title;
+      b.lastChild.textContent = v.note;
+      b.addEventListener("click", () => {
+        if (state.mode === "single") state.sel = [v.id];
+        else if (state.sel.includes(v.id)) { if (state.sel.length > 1) state.sel = state.sel.filter((x) => x !== v.id); }
+        else state.sel = VARIANTS.filter((x) => state.sel.includes(x.id) || x.id === v.id).map((x) => x.id);
+        update();
+      });
+      $("chips").appendChild(b);
+    });
+  }
+
+  function wire(frame) {
+    try {
+      const win = frame.contentWindow;
+      win.addEventListener("scroll", () => {
+        if (lock || !$("sync").checked) return;
+        const max = (w) => Math.max(1, w.document.documentElement.scrollHeight - w.innerHeight);
+        const ratio = win.scrollY / max(win);
+        lock = true;
+        document.querySelectorAll("#cols iframe").forEach((f) => {
+          if (f !== frame && f.contentWindow) f.contentWindow.scrollTo({ top: ratio * max(f.contentWindow), behavior: "instant" });
+        });
+        requestAnimationFrame(() => { lock = false; });
+      }, { passive: true });
+    } catch (e) { /* cross-origin: no sync */ }
+  }
+
+  function renderCols() {
+    const cols = $("cols");
+    const shown = VARIANTS.filter((v) => state.sel.includes(v.id));
+    cols.replaceChildren();
+    const [w] = SIZES[state.device];
+    const avail = document.documentElement.clientWidth - 32 - 24 * (shown.length - 1) - 4; // clientWidth excludes the scrollbar
+    const s = Math.min(1, avail / shown.length / w);
+    // Fit the frame height to what is left of the window below the toolbar, so the page (and its sticky search bar at the
+    // bottom) is fully visible without scrolling the comparison page. The iframe viewport is taller by 1/s when scaled down.
+    const availH = Math.max(360, window.innerHeight - (cols.offsetTop + 47) - 16);
+    shown.forEach((v) => {
+      const col = document.createElement("div");
+      col.className = "col";
+      col.style.width = Math.round(w * s) + "px";
+      col.innerHTML = '<div class="cap"><h2></h2><a target="_blank" rel="noopener">Open full page &#8599;</a></div><div class="dev"><iframe></iframe></div>';
+      col.querySelector("h2").textContent = v.title;
+      col.querySelector("a").href = v.src;
+      const dev = col.querySelector(".dev");
+      dev.style.width = Math.round(w * s) + "px";
+      dev.style.height = Math.round(availH) + "px";
+      const f = col.querySelector("iframe");
+      f.title = v.title;
+      f.style.width = w + "px";
+      f.style.height = Math.round(availH / s) + "px";
+      f.style.transform = "scale(" + s + ")";
+      f.addEventListener("load", () => wire(f));
+      f.src = v.src + (v.src.includes("?") ? "&" : "?") + "embed=1"; // embedded frames hide the cog; the design is chosen by the chips above
+      cols.appendChild(col);
+    });
+  }
+
+  function update() {
+    if (state.mode === "single" && state.sel.length > 1) state.sel = [state.sel[0]];
+    for (const [group, key] of [["mode", "mode"], ["device", "device"]]) {
+      $(group).querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === state[key])));
+    }
+    renderChips();
+    renderCols();
+    $("showing").textContent = VARIANTS.filter((v) => state.sel.includes(v.id)).map((v) => v.title).join(" · ") + " · " + (state.device === "mobile" ? "Mobile" : "Desktop");
+    if (!first) persist();
+  }
+
+  $("mode").addEventListener("click", (e) => { const v = e.target.dataset && e.target.dataset.v; if (v) { state.mode = v; update(); } });
+  $("device").addEventListener("click", (e) => { const v = e.target.dataset && e.target.dataset.v; if (v) { state.device = v; update(); } });
+  // The menu drops down over the page (nothing moves, so the frames stay full size); Escape or a click elsewhere closes it.
+  const menu = $("menu"), menuBtn = $("menu-btn");
+  const setMenu = (open) => { menu.hidden = !open; menuBtn.setAttribute("aria-expanded", String(open)); };
+  menuBtn.addEventListener("click", () => setMenu(menu.hidden));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
+  document.addEventListener("click", (e) => { if (!menu.hidden && !e.target.closest(".topwrap")) setMenu(false); });
+  addEventListener("blur", () => { if (document.activeElement && document.activeElement.tagName === "IFRAME") setMenu(false); }); // a click inside a frame
+  let t;
+  addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { const keep = document.scrollingElement.scrollTop; renderCols(); document.scrollingElement.scrollTop = keep; }, 150); });
+  let first = true;
+  update();
+  first = false;
+})();
+</script>
+</body>
+</html>

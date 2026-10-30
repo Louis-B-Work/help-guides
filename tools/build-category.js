@@ -203,7 +203,7 @@ ${cards}
   <section id="all-guides" class="px-4 py-10" aria-labelledby="all-h">
     <div class="max-w-screen-lg mx-auto">
       <h2 id="all-h" class="text-3xl font-bold mb-5">All ${GUIDES.length} Guides</h2>
-      <div class="flex flex-wrap justify-center gap-3 mb-6" role="group" aria-label="Filter guides by topic">
+      <div class="pill-row flex flex-wrap justify-center gap-3 mb-6" role="group" aria-label="Filter guides by topic">
         ${pills}
       </div>
       <ol id="guide-list" data-page-size="5" class="max-w-3xl mx-auto">
@@ -217,7 +217,7 @@ ${listItems}
   <section class="px-4 py-10" aria-labelledby="cross-h">
     <div class="max-w-screen-lg mx-auto">
       <h2 id="cross-h" class="text-3xl font-bold text-center mb-6">More Guide Topics</h2>
-      <ul class="flex flex-wrap justify-center gap-3">
+      <ul class="pill-row flex flex-wrap justify-center gap-3">
 ${topicPills}
       </ul>
     </div>

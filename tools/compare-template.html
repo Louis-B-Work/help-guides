@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guides redesign comparison | Car Finance 247</title>
+<title>__TITLE__ | Car Finance 247</title>
 <meta name="robots" content="noindex">
 <style>
   :root { --purple: #6905F2; --purple-10: #F0E6FE; --purple-30: #D2B4FB; --page: #ECE6F7; --lime: #8EF205; }
@@ -14,13 +14,23 @@
   button { font: inherit; cursor: pointer; }
   :focus-visible { outline: 3px solid var(--purple); outline-offset: 2px; }
 
+  /* Slim top bar; the navigation and controls drop down over the page from the menu button, so the frames keep the full height */
+  .topwrap { position: relative; z-index: 20; }
+  .top { display: flex; align-items: center; gap: 12px; padding: 6px 16px; background: #fff; border-bottom: 1px solid #e3dcf2; }
+  .top h1 { margin: 0; font-size: .9375rem; }
+  .top .showing { margin-left: auto; font-size: .8125rem; color: rgba(0,0,0,.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .menu-btn { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 2px solid var(--purple); border-radius: 99px; background: #fff; color: var(--purple); font-weight: 700; font-size: .8125rem; }
+  .menu-btn[aria-expanded="true"] { background: var(--purple); color: #fff; }
+  .menu-btn svg { width: 16px; height: 16px; }
+  #menu { position: absolute; left: 0; right: 0; top: 100%; background: #fff; box-shadow: 0 14px 30px -12px rgba(22, 1, 50, .45); border-bottom: 1px solid #e3dcf2; }
+  #menu[hidden] { display: none; }
+
   nav.pages { display: flex; gap: 4px; padding: 0 16px; background: #fff; font-size: 13px; border-bottom: 1px solid #e3dcf2; }
   nav.pages a { padding: 6px 12px; margin: 5px 0; border-radius: 99px; font-weight: 700; text-decoration: none; }
   nav.pages a.on { background: var(--purple); color: #fff; }
 
   header.bar { display: grid; gap: 10px; padding: 10px 16px; background: #fff; }
   .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
-  .row h1 { margin: 0 8px 0 0; font-size: 1rem; }
   .seg { display: inline-flex; border: 2px solid var(--purple); }
   .seg button { border: 0; padding: 6px 14px; font-weight: 700; color: var(--purple); background: #fff; }
   .seg button[aria-pressed="true"] { background: var(--purple); color: #fff; }
@@ -44,32 +54,30 @@
 </style>
 </head>
 <body>
-<nav class="pages" aria-label="Pages">
-  <a class="on" href="./" aria-current="page">Comparison</a>
-  <a href="../control/">Control page</a>
-  <a href="../wireframe/">Wireframe page</a>
-  <a href="../">New page</a>
-</nav>
+<div class="topwrap">
+<div class="top">
+  <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg>Menu</button>
+  <h1>__TITLE__</h1>
+  <span class="showing" id="showing"></span>
+</div>
+<div id="menu" hidden>
+__NAV__
 <header class="bar">
   <div class="row">
-    <h1>Guides redesign comparison</h1>
     <div class="seg" id="mode" role="group" aria-label="Layout"><button type="button" data-v="single">Single</button><button type="button" data-v="side">Side by side</button></div>
     <div class="seg" id="device" role="group" aria-label="Device size"><button type="button" data-v="mobile">Mobile 375</button><button type="button" data-v="desktop">Desktop 1280</button></div>
     <label><input type="checkbox" id="sync" checked> Sync scroll</label>
-    <a class="live" href="__BASE__/guides" target="_blank" rel="noopener">Open live /guides &#8599;</a>
+    <a class="live" href="__LIVE_URL__" target="_blank" rel="noopener">Open live __LIVE_PATH__ &#8599;</a>
   </div>
   <div class="chips" id="chips" role="group" aria-label="Versions to show"></div>
 </header>
+</div>
+</div>
 <main id="cols"></main>
 <script>
 (() => {
   const SIZES = { mobile: [375, 812], desktop: [1280, 800] };
-  const VARIANTS = [
-    { id: "control", title: "Control (live)", note: "Replica of today's /guides", src: "../control/" },
-    { id: "current", title: "Redesign (current brand)", note: "New layout in today's look", src: "../?design=current" },
-    { id: "redesign", title: "Redesign (new brand)", note: "New layout in the new brand guidelines", src: "../?design=redesign" },
-    { id: "wireframe", title: "SEO wireframe (PDF)", note: "Layout from the UX recommendations PDF", src: "../wireframe/" }
-  ];
+  const VARIANTS = __VARIANTS__;
   const DEFAULT_SEL = "control,current"; // shown on a plain load: control (live) next to the redesign in the current brand
   const $ = (id) => document.getElementById(id);
   const qs = new URLSearchParams(location.search);
@@ -165,11 +173,19 @@
     }
     renderChips();
     renderCols();
+    $("showing").textContent = VARIANTS.filter((v) => state.sel.includes(v.id)).map((v) => v.title).join(" · ") + " · " + (state.device === "mobile" ? "Mobile" : "Desktop");
     if (!first) persist();
   }
 
   $("mode").addEventListener("click", (e) => { const v = e.target.dataset && e.target.dataset.v; if (v) { state.mode = v; update(); } });
   $("device").addEventListener("click", (e) => { const v = e.target.dataset && e.target.dataset.v; if (v) { state.device = v; update(); } });
+  // The menu drops down over the page (nothing moves, so the frames stay full size); Escape or a click elsewhere closes it.
+  const menu = $("menu"), menuBtn = $("menu-btn");
+  const setMenu = (open) => { menu.hidden = !open; menuBtn.setAttribute("aria-expanded", String(open)); };
+  menuBtn.addEventListener("click", () => setMenu(menu.hidden));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
+  document.addEventListener("click", (e) => { if (!menu.hidden && !e.target.closest(".topwrap")) setMenu(false); });
+  addEventListener("blur", () => { if (document.activeElement && document.activeElement.tagName === "IFRAME") setMenu(false); }); // a click inside a frame
   let t;
   addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { const keep = document.scrollingElement.scrollTop; renderCols(); document.scrollingElement.scrollTop = keep; }, 150); });
   let first = true;

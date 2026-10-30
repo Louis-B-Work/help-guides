@@ -224,3 +224,10 @@ html:not([data-design="redesign"]) {
 .pg-arrows button { width: 2rem; height: 2rem; border: 1px solid #d1d5db; border-radius: 6px; color: #4b5563; background: #fff; cursor: pointer; }
 .pg-arrows button:hover:not(:disabled) { background: #F5EEFE; }
 .pg-arrows button:disabled { opacity: .3; cursor: default; }
+
+/* On phones the topic pills stay on one row and scroll sideways instead of wrapping */
+@media (max-width: 639px) {
+  .pill-row.flex { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding-bottom: .5rem; scrollbar-width: none; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .pill-row::-webkit-scrollbar { display: none; }
+  .pill-row.flex > * { flex: none; white-space: nowrap; scroll-snap-align: start; }
+}

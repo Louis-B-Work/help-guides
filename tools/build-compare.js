@@ -115,7 +115,23 @@ ${sprite}
 `;
 
 // ---- Compare page (static template: tools/compare-template.html) ----
-const compare = fs.readFileSync("tools/compare-template.html", "utf8").replace(/__BASE__/g, BASE);
+const fill = (tpl, v) => Object.entries(v).reduce((t, [k, val]) => t.split("__" + k + "__").join(val), tpl);
+const nav = (on) => `<nav class="pages" aria-label="Pages">
+  <a${on === "c" ? ' class="on" aria-current="page"' : ""} href="./">Comparison</a>
+  <a href="../control/">Control page</a>
+  <a href="../wireframe/">Wireframe page</a>
+  <a href="../">New page</a>
+  <a href="../compare-am-i-eligible/" style="margin-left:auto">Am I Eligible? comparison &rarr;</a>
+</nav>`;
+const compare = fill(fs.readFileSync("tools/compare-template.html", "utf8"), {
+  BASE, TITLE: "Guides redesign comparison", NAV: nav("c"), LIVE_URL: BASE + "/guides", LIVE_PATH: "/guides",
+  VARIANTS: JSON.stringify([
+    { id: "control", title: "Control (live)", note: "Replica of today's /guides", src: "../control/" },
+    { id: "current", title: "Redesign (current brand)", note: "New layout in today's look", src: "../?design=current" },
+    { id: "redesign", title: "Redesign (new brand)", note: "New layout in the new brand guidelines", src: "../?design=redesign" },
+    { id: "wireframe", title: "SEO wireframe (PDF)", note: "Layout from the UX recommendations PDF", src: "../wireframe/" }
+  ], null, 2)
+});
 
 fs.mkdirSync("control", { recursive: true });
 fs.mkdirSync("compare", { recursive: true });
