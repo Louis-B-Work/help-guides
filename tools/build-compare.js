@@ -121,7 +121,7 @@ const nav = (on) => `<nav class="pages" aria-label="Pages">
   <a href="../control/">Control page</a>
   <a href="../wireframe/">Wireframe page</a>
   <a href="../">New page</a>
-  <a href="../compare-am-i-eligible/" style="margin-left:auto">Am I Eligible? comparison &rarr;</a>
+  <a href="../compare-am-i-eligible/">Am I Eligible? comparison &rarr;</a>
 </nav>`;
 const compare = fill(fs.readFileSync("tools/compare-template.html", "utf8"), {
   BASE, TITLE: "Guides redesign comparison", NAV: nav("c"), LIVE_URL: BASE + "/guides", LIVE_PATH: "/guides",

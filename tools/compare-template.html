@@ -22,26 +22,33 @@
   .menu-btn { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border: 2px solid var(--purple); border-radius: 99px; background: #fff; color: var(--purple); font-weight: 700; font-size: .8125rem; }
   .menu-btn[aria-expanded="true"] { background: var(--purple); color: #fff; }
   .menu-btn svg { width: 16px; height: 16px; }
-  #menu { position: absolute; left: 0; right: 0; top: 100%; background: #fff; box-shadow: 0 14px 30px -12px rgba(22, 1, 50, .45); border-bottom: 1px solid #e3dcf2; }
+  #menu { max-height: calc(100vh - 52px); overflow-y: auto; position: absolute; left: 0; right: 0; top: 100%; background: #fff; box-shadow: 0 14px 30px -12px rgba(22, 1, 50, .45); border-bottom: 1px solid #e3dcf2; }
   #menu[hidden] { display: none; }
 
-  nav.pages { display: flex; gap: 4px; padding: 0 16px; background: #fff; font-size: 13px; border-bottom: 1px solid #e3dcf2; }
-  nav.pages a { padding: 6px 12px; margin: 5px 0; border-radius: 99px; font-weight: 700; text-decoration: none; }
-  nav.pages a.on { background: var(--purple); color: #fff; }
-
-  header.bar { display: grid; gap: 10px; padding: 10px 16px; background: #fff; }
-  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
-  .seg { display: inline-flex; border: 2px solid var(--purple); }
+  .panel { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 24px 40px; padding: 18px 16px 22px; max-width: 1100px; margin: 0 auto; }
+  @media (max-width: 860px) { .panel { grid-template-columns: minmax(0, 1fr); } }
+  .panel h2 { margin: 0; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: rgba(0,0,0,.6); }
+  .hint { margin: 2px 0 10px; font-size: .8125rem; color: rgba(0,0,0,.6); }
+  .field { display: grid; gap: 4px; margin-top: 12px; font-size: .875rem; }
+  .field > span { font-weight: 700; font-size: .8125rem; }
+  .field.sync { display: flex; align-items: center; gap: 8px; }
+  .seg { display: inline-flex; width: max-content; max-width: 100%; border: 2px solid var(--purple); border-radius: 99px; overflow: hidden; }
   .seg button { border: 0; padding: 6px 14px; font-weight: 700; color: var(--purple); background: #fff; }
   .seg button[aria-pressed="true"] { background: var(--purple); color: #fff; }
-  .row label { display: inline-flex; align-items: center; gap: 6px; font-size: .875rem; }
-  .row .live { margin-left: auto; font-size: .8125rem; }
 
-  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
-  .chip { display: grid; gap: 2px; text-align: left; padding: 8px 14px; border-radius: 10px; border: 2px solid var(--purple-30); background: #fff; color: #000; opacity: .8; }
+  .chips { display: grid; gap: 8px; }
+  .chip { display: grid; grid-template-columns: 22px 1fr; column-gap: 10px; text-align: left; padding: 8px 12px; border-radius: 10px; border: 2px solid var(--purple-30); background: #fff; color: #000; }
+  .chip::before { content: ""; grid-row: span 2; align-self: center; width: 18px; height: 18px; border: 2px solid var(--purple-30); border-radius: 5px; background: #fff; }
   .chip b { font-size: .9375rem; }
   .chip span { font-size: .8125rem; color: rgba(0,0,0,.65); }
-  .chip[aria-pressed="true"] { border-color: var(--purple); background: var(--purple-10); opacity: 1; }
+  .chip[aria-pressed="true"] { border-color: var(--purple); background: var(--purple-10); }
+  .chip[aria-pressed="true"]::before { border-color: var(--purple); background: var(--purple) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E") center / 12px no-repeat; }
+
+  nav.pages { display: grid; gap: 2px; margin-top: 10px; font-size: .875rem; }
+  nav.pages a { padding: 7px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+  nav.pages a:hover { background: var(--purple-10); }
+  nav.pages a.on { background: var(--purple); color: #fff; }
+  .live { display: inline-block; margin-top: 10px; padding: 0 12px; font-size: .8125rem; }
 
   main { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; align-items: flex-start; padding: 20px 16px 48px; }
   .col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
@@ -61,16 +68,24 @@
   <span class="showing" id="showing"></span>
 </div>
 <div id="menu" hidden>
+  <div class="panel">
+    <section aria-labelledby="mh-v">
+      <h2 id="mh-v">Versions</h2>
+      <p class="hint">Tick the designs to compare</p>
+      <div class="chips" id="chips" role="group" aria-label="Versions to show"></div>
+    </section>
+    <section aria-labelledby="mh-w">
+      <h2 id="mh-w">View</h2>
+      <div class="field"><span>Layout</span><div class="seg" id="mode" role="group" aria-label="Layout"><button type="button" data-v="single">Single</button><button type="button" data-v="side">Side by side</button></div></div>
+      <div class="field"><span>Device</span><div class="seg" id="device" role="group" aria-label="Device size"><button type="button" data-v="mobile">Mobile 375</button><button type="button" data-v="desktop">Desktop 1280</button></div></div>
+      <label class="field sync"><input type="checkbox" id="sync" checked> Sync scrolling between screens</label>
+    </section>
+    <section aria-labelledby="mh-p">
+      <h2 id="mh-p">Pages</h2>
 __NAV__
-<header class="bar">
-  <div class="row">
-    <div class="seg" id="mode" role="group" aria-label="Layout"><button type="button" data-v="single">Single</button><button type="button" data-v="side">Side by side</button></div>
-    <div class="seg" id="device" role="group" aria-label="Device size"><button type="button" data-v="mobile">Mobile 375</button><button type="button" data-v="desktop">Desktop 1280</button></div>
-    <label><input type="checkbox" id="sync" checked> Sync scroll</label>
-    <a class="live" href="__LIVE_URL__" target="_blank" rel="noopener">Open live __LIVE_PATH__ &#8599;</a>
+      <a class="live" href="__LIVE_URL__" target="_blank" rel="noopener">Open live __LIVE_PATH__ &#8599;</a>
+    </section>
   </div>
-  <div class="chips" id="chips" role="group" aria-label="Versions to show"></div>
-</header>
 </div>
 </div>
 <main id="cols"></main>
