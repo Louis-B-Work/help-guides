@@ -221,3 +221,11 @@ html[data-design="redesign"] {
 html[data-design="redesign"] {
   & #topics-h ~ ul a { border-radius: var(--brand); }
 }
+
+/* Category page pills and pager in the new brand */
+html[data-design="redesign"] {
+  & .topic-pill { border-radius: 9999px; background: var(--purple-10); color: var(--purple); }
+  & .topic-pill:hover, & .topic-pill[aria-pressed="true"] { background: var(--purple); color: #fff; }
+  & .pg-dots button[aria-current="true"] { background: var(--purple); }
+  & .pg-arrows button { border-radius: 9999px; }
+}

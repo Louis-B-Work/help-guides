@@ -4,7 +4,6 @@
 const fs = require("fs");
 
 const BASE = "https://www.carfinance247.co.uk";
-const QUOTE_URL = "https://apply.carfinance247.co.uk/";
 const IMG = (id, file, q = "?language_id=1") => `${BASE}/dA/${id}/asset/${file}${q}`;
 const PHOTOS = {
   licence: IMG("467f6e939fa33901c0574b7c74b37222", "What%20licence%20needed%20for%20car%20finance.jpg"),
@@ -85,6 +84,12 @@ const GUIDES = [
   G("can-i-get-car-finance-if-i-ve-recently-moved", "Can I get car finance if I’ve recently moved?", "Address"),
   G("can-i-get-car-finance-in-northern-ireland", "Can I get car finance in Northern Ireland?", "Address")
 ];
+// Filter pills from the wireframe. Guides about a profession sit with benefits under "Benefit / Profession status".
+const PROFESSIONS = new Set(["car-finance-for-teachers", "car-finance-for-nhs-workers", "car-finance-for-key-workers", "car-finance-for-emergency-service-workers",
+  "car-finance-for-public-sector-workers", "car-finance-for-council-workers", "car-finance-for-charity-workers", "car-finance-for-armed-forces"]);
+const GROUPS = ["Application process", "Your employment", "Personal circumstances", "Benefit / Profession status"];
+const groupOf = (g) => PROFESSIONS.has(g.slug) || g.tag === "Benefits" ? GROUPS[3] : g.tag === "Application" ? GROUPS[0] : g.tag === "Employment" ? GROUPS[1] : GROUPS[2];
+GUIDES.forEach((g) => { g.group = groupOf(g); });
 const bySlug = Object.fromEntries(GUIDES.map((g) => [g.slug, g]));
 
 // Most popular: ranked placeholders. Replace with the traffic/performance ranking used for the homepage carousel.
@@ -148,33 +153,43 @@ const cards = POPULAR.map((g) => `        <article class="relative shrink-0 w-[c
             <p class="mt-2 text-sm">${esc(g.summary)}</p></div>
         </article>`).join("\n");
 
-const listItems = GUIDES.map((g, i) => `        <li class="border-b border-gray-200" data-guide>
+const listItems = GUIDES.map((g) => `        <li class="border-b border-gray-200" data-guide data-group="${esc(g.group)}">
           <a href="${liveUrl(g)}" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="${photoFor(g)}" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">${esc(titleCase(g.title))}</h3><span class="tag-chip">${esc(g.tag)}</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">${esc(titleCase(g.title))}</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>`).join("\n");
 
-const crossCards = OTHERS.map(([name, href, blurb]) => `        <a href="${BASE}${href}" class="cat-card"><h3>${esc(name)}</h3><p>${esc(blurb)}</p></a>`).join("\n") +
-  `\n        <a href="${BASE}/videos" class="cat-card cat-card-video"><h3>Video Guides</h3><p>Short, friendly explainers on car finance</p><span class="cat-more">View all${chev}</span></a>`;
+const topicPills = OTHERS.map(([name, href]) => `        <li><a href="${BASE}${href}" class="topic-pill">${esc(name)}</a></li>`).join("\n");
+
+const START = [
+  ["Car Finance Explained", "Buying a car is one of the few major purchases you’ll make in your life, so it’s important to do it right. Learn more about car finance here.", PHOTOS.pcp, "/guide/finance-options"],
+  ["How Car Finance Works", "Not sure how car finance works and what will be expected from you? Learn everything about the process and what you’ll be expected to do here.", PHOTOS.licence, "/guide/finance-options"]
+].map(([t, text, img, href]) => `        <article class="relative bg-cardbg">
+          <img src="${img}" alt="" loading="lazy" class="w-full aspect-[2/1] object-cover">
+          <div class="p-4 pb-6"><h3 class="font-bold"><a href="${BASE}${href}" class="hover:underline after:absolute after:inset-0">${esc(t)}</a></h3><p class="mt-2 text-sm">${esc(text)}</p></div>
+        </article>`).join("\n");
+
+const pills = GROUPS.map((n) => `<button type="button" class="topic-pill" data-group="${esc(n)}" aria-pressed="false">${esc(n)}</button>`).join("\n        ");
 
 const body = `<body class="bg-white antialiased">
 
 ${header}
 
 <main>
-  <!-- Hero: H1 is the category name only -->
-  <section class="hero-bg text-white pt-36 pb-20 px-4 text-center" aria-labelledby="page-title">
-    <nav aria-label="Breadcrumb" class="text-sm opacity-90 mb-4"><a href="./" class="underline hover:no-underline">Help &amp; Guides</a> <span aria-hidden="true">/</span> <span>${esc(CATEGORY.name)}</span></nav>
-    <h1 id="page-title" class="text-6xl max-md:text-4xl font-bold leading-tight">${esc(CATEGORY.name)}</h1>
-    <p class="mt-6 text-sm max-w-[34rem] mx-auto">${esc(CATEGORY.intro)}</p>
-  </section>
+  <!-- Breadcrumb strip -->
+  <div class="hero-bg h-20" aria-hidden="true"></div>
+  <nav aria-label="Breadcrumb" class="bg-tint py-2 px-4 text-xs"><div class="max-w-screen-lg mx-auto"><a href="./" class="text-primary font-semibold hover:underline">Help &amp; Advice</a> <span aria-hidden="true" class="mx-1">&rsaquo;</span> <span>${esc(CATEGORY.name)}</span></div></nav>
 
-  ${searchStrip}
+  <!-- Title and search: H1 is the category name only -->
+  <section class="px-4 pt-10 text-center" aria-labelledby="page-title">
+    <h1 id="page-title" class="text-5xl max-md:text-4xl font-bold leading-tight">${esc(CATEGORY.name)}</h1>
+  </section>
+  ${searchStrip.replace("bg-tint px-4 pb-4", "px-4 pb-2 pt-6").replace("-mt-7", "mt-0")}
+  <section class="px-4 pt-6" aria-label="About this section"><p class="max-w-3xl mx-auto text-sm">${esc(CATEGORY.intro)}</p></section>
 
   <!-- Most popular: every card is in the HTML with a real link; the carousel only scrolls what is already there -->
-  <section class="px-4 pt-14 pb-12" aria-labelledby="popular-h">
+  <section class="px-4 pt-12 pb-10" aria-labelledby="popular-h">
     <div class="max-w-screen-lg mx-auto" data-carousel>
       <h2 id="popular-h" class="text-3xl font-bold mb-5">Most Popular</h2>
       <div data-track class="hscroll flex gap-6 overflow-x-auto pb-2">
@@ -184,34 +199,46 @@ ${cards}
     </div>
   </section>
 
-  <!-- Full guide list: all ${GUIDES.length} guides are in the HTML; category.js shows 5 at a time -->
-  <section id="all-guides" class="bg-tint px-4 py-12" aria-labelledby="all-h">
+  <!-- Full guide list: all ${GUIDES.length} guides are in the HTML; category.js filters by pill and shows 5 at a time -->
+  <section id="all-guides" class="px-4 py-10" aria-labelledby="all-h">
     <div class="max-w-screen-lg mx-auto">
-      <h2 id="all-h" class="text-3xl font-bold mb-4">All Eligibility Guides</h2>
-      <ol id="guide-list" data-page-size="5">
+      <h2 id="all-h" class="text-3xl font-bold mb-5">All ${GUIDES.length} Guides</h2>
+      <div class="flex flex-wrap justify-center gap-3 mb-6" role="group" aria-label="Filter guides by topic">
+        ${pills}
+      </div>
+      <ol id="guide-list" data-page-size="5" class="max-w-3xl mx-auto">
 ${listItems}
       </ol>
-      <nav id="guide-pager" aria-label="Guide list pages" class="flex items-center justify-between gap-4 mt-5"></nav>
+      <nav id="guide-pager" aria-label="Guide list pages" class="max-w-3xl mx-auto flex items-center justify-between gap-4 mt-5"></nav>
     </div>
   </section>
 
-  <!-- Cross-links to the other guide categories -->
-  <section class="px-4 py-12" aria-labelledby="cross-h">
+  <!-- Other guide topics -->
+  <section class="px-4 py-10" aria-labelledby="cross-h">
     <div class="max-w-screen-lg mx-auto">
-      <h2 id="cross-h" class="text-3xl font-bold mb-5">Explore Other Guide Categories</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-${crossCards}
+      <h2 id="cross-h" class="text-3xl font-bold text-center mb-6">More Guide Topics</h2>
+      <ul class="flex flex-wrap justify-center gap-3">
+${topicPills}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Get started -->
+  <section class="px-4 py-10" aria-labelledby="start-h">
+    <div class="max-w-4xl mx-auto">
+      <h2 id="start-h" class="text-3xl font-bold text-center mb-6">Get Started with Car Finance</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+${START}
       </div>
     </div>
   </section>
 
-  <!-- Get a quote CTA: sits directly above the footer navigation -->
-  <section id="help-cta" class="px-4 py-12 flex flex-wrap items-center justify-center gap-6 text-center">
-    <div>
-      <h2 class="text-xl font-bold">Ready to Get a Quote?</h2>
-      <p class="mt-1 text-gray-700">See what you could be eligible for in a few quick questions.</p>
-    </div>
-    <a href="${QUOTE_URL}" class="inline-block bg-teal text-dark-1 font-bold rounded-md px-6 py-3 hover:brightness-95">Get a quote${chev}</a>
+  <!-- Contact CTA: sits directly above the footer navigation -->
+  <section id="help-cta" class="px-4 py-12 text-center bg-tint">
+    <h2 class="text-2xl font-bold">Can’t Find the Right Answer?</h2>
+    <p class="mt-1 text-gray-700">Our Manchester based team is ready to help you.</p>
+    <a href="${BASE}/contact" class="inline-block mt-4 bg-teal text-dark-1 font-bold rounded-md px-6 py-3 hover:brightness-95">Get in touch${chev}</a>
+    <p class="mt-4 text-xs text-gray-600">Representative 19.5% APR.<br>Car Finance 247 Limited is a credit broker, not a lender.</p>
   </section>
 </main>
 

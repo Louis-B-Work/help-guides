@@ -212,3 +212,15 @@ html:not([data-design="redesign"]) {
 @media (max-width: 639px) {
   html:not([data-design="redesign"]) #page-title { font-size: clamp(1.6rem, 8.6vw, 2.25rem); white-space: nowrap; }
 }
+
+/* Category page: topic pills (filters and cross-links) and the list pager, as in the "Am I Eligible?" wireframe */
+.topic-pill { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: .6rem 1.75rem; font-size: .875rem; font-weight: 700; color: #6905F2; background: #F5EEFE; border: 2px solid transparent; border-radius: 6px; cursor: pointer; text-align: center; }
+.topic-pill:hover { background: #6905F2; color: #fff; }
+.topic-pill[aria-pressed="true"] { background: #6905F2; color: #fff; }
+.pg-dots { display: flex; gap: .5rem; }
+.pg-dots button { width: .5rem; height: .5rem; padding: 0; border: 0; border-radius: 9999px; background: #d1d5db; cursor: pointer; }
+.pg-dots button[aria-current="true"] { width: 1.5rem; background: #4b22a8; }
+.pg-arrows { display: flex; gap: .5rem; }
+.pg-arrows button { width: 2rem; height: 2rem; border: 1px solid #d1d5db; border-radius: 6px; color: #4b5563; background: #fff; cursor: pointer; }
+.pg-arrows button:hover:not(:disabled) { background: #F5EEFE; }
+.pg-arrows button:disabled { opacity: .3; cursor: default; }

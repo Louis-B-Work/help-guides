@@ -1,59 +1,70 @@
-// Paginates the full guide list five at a time. Every guide is already in the HTML; this only hides the ones
-// on other pages, so without JavaScript the whole list is still visible and crawlable.
+// Filters the full guide list by topic pill and shows it five at a time. Every guide is already in the HTML; this only
+// hides the ones that are filtered out or on another page, so without JavaScript the whole list is still visible and crawlable.
 (() => {
   const list = document.getElementById("guide-list");
   const pager = document.getElementById("guide-pager");
   if (!list || !pager) return;
 
-  const items = [...list.querySelectorAll(":scope > li")];
+  const all = [...list.querySelectorAll(":scope > li")];
+  const pills = [...document.querySelectorAll("#all-guides [data-group]:not(li)")];
   const size = Number(list.dataset.pageSize) || 5;
-  const pages = Math.ceil(items.length / size);
-  if (pages < 2) return;
+  const title = document.getElementById("all-h");
+  const baseTitle = title.textContent;
+  let group = null;
   let page = 0;
   let first = true;
 
-  const btn = (label, text, cls) => {
-    const b = document.createElement("button");
+  const el = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  };
+  const arrow = (label, text, onClick) => {
+    const b = el("button", null, text);
     b.type = "button";
-    b.className = cls;
-    b.textContent = text;
     b.setAttribute("aria-label", label);
+    b.addEventListener("click", onClick);
     return b;
   };
 
   function render() {
-    items.forEach((li, i) => { li.hidden = Math.floor(i / size) !== page; });
+    const shown = all.filter((li) => !group || li.dataset.group === group);
+    const pages = Math.max(1, Math.ceil(shown.length / size));
+    page = Math.min(page, pages - 1);
+    all.forEach((li) => { li.hidden = true; });
+    shown.forEach((li, i) => { li.hidden = Math.floor(i / size) !== page; });
+    title.textContent = group ? `${group} (${shown.length})` : baseTitle;
+    pills.forEach((p) => p.setAttribute("aria-pressed", String(p.dataset.group === group)));
+
     pager.replaceChildren();
-
-    const prev = btn("Previous 5 guides", "‹ Previous", "pg-btn pg-nav");
-    prev.disabled = page === 0;
-    prev.addEventListener("click", () => go(page - 1));
-
-    const next = btn("Next 5 guides", "Next ›", "pg-btn pg-nav");
-    next.disabled = page === pages - 1;
-    next.addEventListener("click", () => go(page + 1));
-
-    const status = document.createElement("span");
-    status.className = "pg-status";
-    status.setAttribute("aria-live", "polite");
-    status.textContent = `Page ${page + 1} of ${pages}`;
-
-    const nums = document.createElement("div");
-    nums.className = "pg-nums";
+    if (pages < 2) return;
+    const dots = el("div", "pg-dots");
     for (let i = 0; i < pages; i++) {
-      const b = btn(`Page ${i + 1}`, String(i + 1), "pg-btn pg-num");
-      if (i === page) b.setAttribute("aria-current", "page");
-      b.addEventListener("click", () => go(i));
-      nums.appendChild(b);
+      const d = el("button");
+      d.type = "button";
+      d.setAttribute("aria-label", `Go to page ${i + 1}`);
+      if (i === page) d.setAttribute("aria-current", "true");
+      d.addEventListener("click", () => go(i));
+      dots.appendChild(d);
     }
-    pager.append(prev, status, nums, next);
+    const prev = arrow("Previous 5 guides", "‹", () => go(page - 1));
+    const next = arrow("Next 5 guides", "›", () => go(page + 1));
+    prev.disabled = page === 0;
+    next.disabled = page === pages - 1;
+    const arrows = el("div", "pg-arrows");
+    arrows.append(prev, next);
+    pager.append(dots, arrows);
   }
 
   function go(i) {
-    page = Math.min(Math.max(i, 0), pages - 1);
+    page = Math.max(i, 0);
     render();
-    if (!first) document.getElementById("all-h").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    if (!first) title.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
   }
+
+  // Selecting a pill filters the list; selecting it again clears the filter.
+  pills.forEach((p) => p.addEventListener("click", () => { group = group === p.dataset.group ? null : p.dataset.group; page = 0; render(); }));
 
   render();
   first = false;

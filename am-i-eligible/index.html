@@ -146,16 +146,17 @@ tailwind.config = { theme: { extend: {
 </header>
 
 <main>
-  <!-- Hero: H1 is the category name only -->
-  <section class="hero-bg text-white pt-36 pb-20 px-4 text-center" aria-labelledby="page-title">
-    <nav aria-label="Breadcrumb" class="text-sm opacity-90 mb-4"><a href="../" class="underline hover:no-underline">Help &amp; Guides</a> <span aria-hidden="true">/</span> <span>Am I Eligible?</span></nav>
-    <h1 id="page-title" class="text-6xl max-md:text-4xl font-bold leading-tight">Am I Eligible?</h1>
-    <p class="mt-6 text-sm max-w-[34rem] mx-auto">Not sure if you will be accepted? These guides explain what car finance lenders check, from income and employment to age, address history and credit, and what you can do to improve your chances. Find out which documents to have ready, how long approval takes, and whether being self-employed, on benefits or new to a job changes your options.</p>
-  </section>
+  <!-- Breadcrumb strip -->
+  <div class="hero-bg h-20" aria-hidden="true"></div>
+  <nav aria-label="Breadcrumb" class="bg-tint py-2 px-4 text-xs"><div class="max-w-screen-lg mx-auto"><a href="../" class="text-primary font-semibold hover:underline">Help &amp; Advice</a> <span aria-hidden="true" class="mx-1">&rsaquo;</span> <span>Am I Eligible?</span></div></nav>
 
+  <!-- Title and search: H1 is the category name only -->
+  <section class="px-4 pt-10 text-center" aria-labelledby="page-title">
+    <h1 id="page-title" class="text-5xl max-md:text-4xl font-bold leading-tight">Am I Eligible?</h1>
+  </section>
   <!-- AI helper search: overlaps the hero edge over a tint strip -->
-  <div class="bg-tint px-4 pb-4">
-    <div class="max-w-3xl mx-auto -mt-7" id="hero-search">
+  <div class="px-4 pb-2 pt-6">
+    <div class="max-w-3xl mx-auto mt-0" id="hero-search">
       <form data-ai-form role="search" aria-label="Ask our AI helper" class="relative">
         <div class="ai-field bg-white rounded-lg shadow-lg flex items-center">
           <svg class="absolute left-4 w-5 h-5 text-primary" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 5.6L19.5 9.5l-5.6 1.9L12 17l-1.9-5.6L4.5 9.5l5.6-1.9L12 2zm7 11l.9 2.6 2.6.9-2.6.9L19 20l-.9-2.6-2.6-.9 2.6-.9L19 13z"/></svg>
@@ -170,9 +171,10 @@ tailwind.config = { theme: { extend: {
       <p class="mt-2 text-center text-xs text-gray-500">AI helper. Guidance only, not financial advice.</p>
     </div>
   </div>
+  <section class="px-4 pt-6" aria-label="About this section"><p class="max-w-3xl mx-auto text-sm">Not sure if you will be accepted? These guides explain what car finance lenders check, from income and employment to age, address history and credit, and what you can do to improve your chances. Find out which documents to have ready, how long approval takes, and whether being self-employed, on benefits or new to a job changes your options.</p></section>
 
   <!-- Most popular: every card is in the HTML with a real link; the carousel only scrolls what is already there -->
-  <section class="px-4 pt-14 pb-12" aria-labelledby="popular-h">
+  <section class="px-4 pt-12 pb-10" aria-labelledby="popular-h">
     <div class="max-w-screen-lg mx-auto" data-carousel>
       <h2 id="popular-h" class="text-3xl font-bold mb-5">Most Popular</h2>
       <div data-track class="hscroll flex gap-6 overflow-x-auto pb-2">
@@ -217,289 +219,274 @@ tailwind.config = { theme: { extend: {
     </div>
   </section>
 
-  <!-- Full guide list: all 36 guides are in the HTML; category.js shows 5 at a time -->
-  <section id="all-guides" class="bg-tint px-4 py-12" aria-labelledby="all-h">
+  <!-- Full guide list: all 36 guides are in the HTML; category.js filters by pill and shows 5 at a time -->
+  <section id="all-guides" class="px-4 py-10" aria-labelledby="all-h">
     <div class="max-w-screen-lg mx-auto">
-      <h2 id="all-h" class="text-3xl font-bold mb-4">All Eligibility Guides</h2>
-      <ol id="guide-list" data-page-size="5">
-        <li class="border-b border-gray-200" data-guide>
+      <h2 id="all-h" class="text-3xl font-bold mb-5">All 36 Guides</h2>
+      <div class="flex flex-wrap justify-center gap-3 mb-6" role="group" aria-label="Filter guides by topic">
+        <button type="button" class="topic-pill" data-group="Application process" aria-pressed="false">Application process</button>
+        <button type="button" class="topic-pill" data-group="Your employment" aria-pressed="false">Your employment</button>
+        <button type="button" class="topic-pill" data-group="Personal circumstances" aria-pressed="false">Personal circumstances</button>
+        <button type="button" class="topic-pill" data-group="Benefit / Profession status" aria-pressed="false">Benefit / Profession status</button>
+      </div>
+      <ol id="guide-list" data-page-size="5" class="max-w-3xl mx-auto">
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/is-it-hard-to-get-accepted-for-car-finance" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/47996887843a9acce479aceed9beb591/asset/Can%20I%20refinance%20my%20balloon%20payment%20on%20a%20PCP.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Is It Hard to Get Accepted for Car Finance?</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Is It Hard to Get Accepted for Car Finance?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/what-do-lenders-look-for-when-approving-car-finance" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">What Do Lenders Look for When Approving Car Finance?</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">What Do Lenders Look for When Approving Car Finance?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/how-long-does-it-take-for-car-finance-to-be-approved" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">How Long Does It Take for Car Finance to Be Approved?</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">How Long Does It Take for Car Finance to Be Approved?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/what-documents-do-i-need-for-car-finance" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/47996887843a9acce479aceed9beb591/asset/Can%20I%20refinance%20my%20balloon%20payment%20on%20a%20PCP.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">What Documents Do I Need for Car Finance?</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">What Documents Do I Need for Car Finance?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/how-much-deposit-do-i-need-for-car-finance" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">How Much Deposit Do I Need for Car Finance?</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">How Much Deposit Do I Need for Car Finance?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/a-complete-guide-to-car-finance-checks-in-the-uk" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">A Complete Guide to Car Finance Checks in the UK</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">A Complete Guide to Car Finance Checks in the UK</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/do-i-need-a-driving-licence-to-get-car-finance" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/33b74fe5d937df4ebb9b429a2a393e7f/asset/What%20Credit%20Score%20is%20Needed%20for%20Car%20Finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Do I Need a Driving Licence to Get Car Finance?</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Do I Need a Driving Licence to Get Car Finance?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/can-you-get-car-finance-without-proof-of-income" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can You Get Car Finance Without Proof of Income?</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can You Get Car Finance Without Proof of Income?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-without-a-bank-account" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/33b74fe5d937df4ebb9b429a2a393e7f/asset/What%20Credit%20Score%20is%20Needed%20for%20Car%20Finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance Without a Bank Account</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance Without a Bank Account</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Application process">
           <a href="https://www.carfinance247.co.uk/guide/understanding-negative-equity-car-finance" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/47996887843a9acce479aceed9beb591/asset/Can%20I%20refinance%20my%20balloon%20payment%20on%20a%20PCP.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Understanding Negative Equity Car Finance</h3><span class="tag-chip">Application</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Understanding Negative Equity Car Finance</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Your employment">
           <a href="https://www.carfinance247.co.uk/guide/can-i-get-car-finance-if-i-m-self-employed" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/ca0de27e4d56671aa76e24d5522d83d4/asset/PCP%20car%20finance%20with%20bad%20credit.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can I Get Car Finance If I'm Self-Employed?</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can I Get Car Finance If I'm Self-Employed?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Your employment">
           <a href="https://www.carfinance247.co.uk/guide/can-i-get-car-finance-with-a-new-job" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/ca0de27e4d56671aa76e24d5522d83d4/asset/PCP%20car%20finance%20with%20bad%20credit.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can I Get Car Finance with a New Job?</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can I Get Car Finance with a New Job?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Your employment">
           <a href="https://www.carfinance247.co.uk/guide/can-i-get-car-finance-if-i-m-unemployed" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/ca0de27e4d56671aa76e24d5522d83d4/asset/PCP%20car%20finance%20with%20bad%20credit.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can I Get Car Finance If I'm Unemployed?</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can I Get Car Finance If I'm Unemployed?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Your employment">
           <a href="https://www.carfinance247.co.uk/guide/can-you-get-car-finance-if-you-work-part-time" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can You Get Car Finance If You Work Part-Time?</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can You Get Car Finance If You Work Part-Time?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Your employment">
           <a href="https://www.carfinance247.co.uk/guide/can-you-get-car-finance-as-an-agency-worker" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/4bc1eb4e3400aba2891f658c9184330e/asset/outstanding%20finance%20on%20my%20car.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can You Get Car Finance as an Agency Worker?</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can You Get Car Finance as an Agency Worker?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-teachers" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/4bc1eb4e3400aba2891f658c9184330e/asset/outstanding%20finance%20on%20my%20car.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for Teachers</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for Teachers</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-nhs-workers" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/ca0de27e4d56671aa76e24d5522d83d4/asset/PCP%20car%20finance%20with%20bad%20credit.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for NHS Workers</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for NHS Workers</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-key-workers" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for Key Workers</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for Key Workers</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-emergency-service-workers" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/4bc1eb4e3400aba2891f658c9184330e/asset/outstanding%20finance%20on%20my%20car.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for Emergency Service Workers</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for Emergency Service Workers</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-public-sector-workers" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/4bc1eb4e3400aba2891f658c9184330e/asset/outstanding%20finance%20on%20my%20car.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for Public Sector Workers</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for Public Sector Workers</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-council-workers" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/4bc1eb4e3400aba2891f658c9184330e/asset/outstanding%20finance%20on%20my%20car.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for Council Workers</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for Council Workers</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-charity-workers" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/4bc1eb4e3400aba2891f658c9184330e/asset/outstanding%20finance%20on%20my%20car.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for Charity Workers</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for Charity Workers</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-armed-forces" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/4bc1eb4e3400aba2891f658c9184330e/asset/outstanding%20finance%20on%20my%20car.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for Armed Forces</h3><span class="tag-chip">Employment</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for Armed Forces</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-on-benefits" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance on Benefits</h3><span class="tag-chip">Benefits</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance on Benefits</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-with-a-disability" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance with a Disability</h3><span class="tag-chip">Benefits</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance with a Disability</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/can-i-get-car-finance-on-a-carer-s-allowance" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/4bc1eb4e3400aba2891f658c9184330e/asset/outstanding%20finance%20on%20my%20car.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can I Get Car Finance on a Carer's Allowance?</h3><span class="tag-chip">Benefits</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can I Get Car Finance on a Carer's Allowance?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Benefit / Profession status">
           <a href="https://www.carfinance247.co.uk/guide/can-i-get-car-finance-as-a-housewife-or-stay-at-home-parent" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can I Get Car Finance as a Housewife or Stay-at-Home Parent?</h3><span class="tag-chip">Benefits</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can I Get Car Finance as a Housewife or Stay-at-Home Parent?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Personal circumstances">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-students" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/ca0de27e4d56671aa76e24d5522d83d4/asset/PCP%20car%20finance%20with%20bad%20credit.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for Students</h3><span class="tag-chip">Age</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for Students</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Personal circumstances">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-for-young-drivers" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/ca0de27e4d56671aa76e24d5522d83d4/asset/PCP%20car%20finance%20with%20bad%20credit.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance for Young Drivers</h3><span class="tag-chip">Age</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance for Young Drivers</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Personal circumstances">
           <a href="https://www.carfinance247.co.uk/guide/at-what-age-can-you-get-car-finance" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/47996887843a9acce479aceed9beb591/asset/Can%20I%20refinance%20my%20balloon%20payment%20on%20a%20PCP.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">At What Age Can You Get Car Finance?</h3><span class="tag-chip">Age</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">At What Age Can You Get Car Finance?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Personal circumstances">
           <a href="https://www.carfinance247.co.uk/guide/refused-car-finance" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/7331ce660348aa7b6d1fa05acd211af3/asset/get%20car%20finance%20with%20a%20default.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Refused Car Finance</h3><span class="tag-chip">Credit History</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Refused Car Finance</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Personal circumstances">
           <a href="https://www.carfinance247.co.uk/guide/car-finance-with-a-ccj" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/7331ce660348aa7b6d1fa05acd211af3/asset/get%20car%20finance%20with%20a%20default.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Car Finance with a CCJ</h3><span class="tag-chip">Credit History</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Car Finance with a CCJ</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Personal circumstances">
           <a href="https://www.carfinance247.co.uk/guide/bankruptcy-and-car-finance-explained" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/b56a2a808ab9adea33d5cb618f8140d6/asset/Car%20Finance%20With%20a%20CCJ.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Bankruptcy and Car Finance Explained</h3><span class="tag-chip">Credit History</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Bankruptcy and Car Finance Explained</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Personal circumstances">
           <a href="https://www.carfinance247.co.uk/guide/can-you-get-car-finance-without-3-years-address-history" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can You Get Car Finance Without 3 Years Address History?</h3><span class="tag-chip">Address</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can You Get Car Finance Without 3 Years Address History?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Personal circumstances">
           <a href="https://www.carfinance247.co.uk/guide/can-i-get-car-finance-if-i-ve-recently-moved" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/4bc1eb4e3400aba2891f658c9184330e/asset/outstanding%20finance%20on%20my%20car.jpg" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can I Get Car Finance If I’ve Recently Moved?</h3><span class="tag-chip">Address</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can I Get Car Finance If I’ve Recently Moved?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
-        <li class="border-b border-gray-200" data-guide>
+        <li class="border-b border-gray-200" data-guide data-group="Personal circumstances">
           <a href="https://www.carfinance247.co.uk/guide/can-i-get-car-finance-in-northern-ireland" class="flex items-center gap-4 py-4 hover:bg-tint/60">
-            <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-20 h-16 rounded object-cover shrink-0">
-            <span class="flex-1 min-w-0"><h3 class="block font-medium text-gray-800">Can I Get Car Finance in Northern Ireland?</h3><span class="tag-chip">Address</span></span>
-            <span class="text-gray-500 text-xl" aria-hidden="true">&rsaquo;</span>
+            <h3 class="flex-1 min-w-0 font-semibold text-gray-900">Can I Get Car Finance in Northern Ireland?</h3>
+            <span class="text-primary text-xl" aria-hidden="true">&rarr;</span>
           </a>
         </li>
       </ol>
-      <nav id="guide-pager" aria-label="Guide list pages" class="flex items-center justify-between gap-4 mt-5"></nav>
+      <nav id="guide-pager" aria-label="Guide list pages" class="max-w-3xl mx-auto flex items-center justify-between gap-4 mt-5"></nav>
     </div>
   </section>
 
-  <!-- Cross-links to the other guide categories -->
-  <section class="px-4 py-12" aria-labelledby="cross-h">
+  <!-- Other guide topics -->
+  <section class="px-4 py-10" aria-labelledby="cross-h">
     <div class="max-w-screen-lg mx-auto">
-      <h2 id="cross-h" class="text-3xl font-bold mb-5">Explore Other Guide Categories</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <a href="https://www.carfinance247.co.uk/guide/choosing-a-vehicle" class="cat-card"><h3>Choosing a Vehicle</h3><p>35 guides on cars, vans and what lenders will finance</p></a>
-        <a href="https://www.carfinance247.co.uk/guide/finance-options" class="cat-card"><h3>Finance Options</h3><p>47 guides comparing PCP, hire purchase, leasing and more</p></a>
-        <a href="https://www.carfinance247.co.uk/guide/looking-to-upgrade" class="cat-card"><h3>Looking to Upgrade</h3><p>9 guides on swapping, settling and refinancing</p></a>
-        <a href="https://www.carfinance247.co.uk/guide/my-credit" class="cat-card"><h3>My Credit</h3><p>19 guides on credit scores, reports and bad credit</p></a>
-        <a href="https://www.carfinance247.co.uk/videos" class="cat-card cat-card-video"><h3>Video Guides</h3><p>Short, friendly explainers on car finance</p><span class="cat-more">View all<svg class="inline-block w-3 h-3 ml-1 -mt-0.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2l4 4-4 4"/></svg></span></a>
+      <h2 id="cross-h" class="text-3xl font-bold text-center mb-6">More Guide Topics</h2>
+      <ul class="flex flex-wrap justify-center gap-3">
+        <li><a href="https://www.carfinance247.co.uk/guide/choosing-a-vehicle" class="topic-pill">Choosing a Vehicle</a></li>
+        <li><a href="https://www.carfinance247.co.uk/guide/finance-options" class="topic-pill">Finance Options</a></li>
+        <li><a href="https://www.carfinance247.co.uk/guide/looking-to-upgrade" class="topic-pill">Looking to Upgrade</a></li>
+        <li><a href="https://www.carfinance247.co.uk/guide/my-credit" class="topic-pill">My Credit</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Get started -->
+  <section class="px-4 py-10" aria-labelledby="start-h">
+    <div class="max-w-4xl mx-auto">
+      <h2 id="start-h" class="text-3xl font-bold text-center mb-6">Get Started with Car Finance</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <article class="relative bg-cardbg">
+          <img src="https://www.carfinance247.co.uk/dA/ca0de27e4d56671aa76e24d5522d83d4/asset/PCP%20car%20finance%20with%20bad%20credit.jpg?language_id=1" alt="" loading="lazy" class="w-full aspect-[2/1] object-cover">
+          <div class="p-4 pb-6"><h3 class="font-bold"><a href="https://www.carfinance247.co.uk/guide/finance-options" class="hover:underline after:absolute after:inset-0">Car Finance Explained</a></h3><p class="mt-2 text-sm">Buying a car is one of the few major purchases you’ll make in your life, so it’s important to do it right. Learn more about car finance here.</p></div>
+        </article>
+        <article class="relative bg-cardbg">
+          <img src="https://www.carfinance247.co.uk/dA/467f6e939fa33901c0574b7c74b37222/asset/What%20licence%20needed%20for%20car%20finance.jpg?language_id=1" alt="" loading="lazy" class="w-full aspect-[2/1] object-cover">
+          <div class="p-4 pb-6"><h3 class="font-bold"><a href="https://www.carfinance247.co.uk/guide/finance-options" class="hover:underline after:absolute after:inset-0">How Car Finance Works</a></h3><p class="mt-2 text-sm">Not sure how car finance works and what will be expected from you? Learn everything about the process and what you’ll be expected to do here.</p></div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Get a quote CTA: sits directly above the footer navigation -->
-  <section id="help-cta" class="px-4 py-12 flex flex-wrap items-center justify-center gap-6 text-center">
-    <div>
-      <h2 class="text-xl font-bold">Ready to Get a Quote?</h2>
-      <p class="mt-1 text-gray-700">See what you could be eligible for in a few quick questions.</p>
-    </div>
-    <a href="https://apply.carfinance247.co.uk/" class="inline-block bg-teal text-dark-1 font-bold rounded-md px-6 py-3 hover:brightness-95">Get a quote<svg class="inline-block w-3 h-3 ml-1 -mt-0.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2l4 4-4 4"/></svg></a>
+  <!-- Contact CTA: sits directly above the footer navigation -->
+  <section id="help-cta" class="px-4 py-12 text-center bg-tint">
+    <h2 class="text-2xl font-bold">Can’t Find the Right Answer?</h2>
+    <p class="mt-1 text-gray-700">Our Manchester based team is ready to help you.</p>
+    <a href="https://www.carfinance247.co.uk/contact" class="inline-block mt-4 bg-teal text-dark-1 font-bold rounded-md px-6 py-3 hover:brightness-95">Get in touch<svg class="inline-block w-3 h-3 ml-1 -mt-0.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2l4 4-4 4"/></svg></a>
+    <p class="mt-4 text-xs text-gray-600">Representative 19.5% APR.<br>Car Finance 247 Limited is a credit broker, not a lender.</p>
   </section>
 </main>
 
