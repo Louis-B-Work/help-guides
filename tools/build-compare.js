@@ -116,15 +116,12 @@ ${sprite}
 
 // ---- Compare page (static template: tools/compare-template.html) ----
 const fill = (tpl, v) => Object.entries(v).reduce((t, [k, val]) => t.split("__" + k + "__").join(val), tpl);
-const nav = (on) => `<nav class="pages" aria-label="Pages">
-  <a${on === "c" ? ' class="on" aria-current="page"' : ""} href="./">Comparison</a>
-  <a href="../control/">Control page</a>
-  <a href="../wireframe/">Wireframe page</a>
-  <a href="../">New page</a>
-  <a href="../compare-am-i-eligible/">Am I Eligible? comparison &rarr;</a>
+const nav = `<nav class="pages" aria-label="Compare page">
+  <a href="./" aria-current="page">Guides homepage</a>
+  <a href="../compare-am-i-eligible/">Am I Eligible?</a>
 </nav>`;
 const compare = fill(fs.readFileSync("tools/compare-template.html", "utf8"), {
-  BASE, TITLE: "Guides redesign comparison", NAV: nav("c"), LIVE_URL: BASE + "/guides", LIVE_PATH: "/guides",
+  BASE, TITLE: "Guides redesign comparison", NAV: nav, LIVE_URL: BASE + "/guides", LIVE_PATH: "/guides",
   VARIANTS: JSON.stringify([
     { id: "control", title: "Control (live)", note: "Replica of today's /guides", src: "../control/" },
     { id: "current", title: "Redesign (current brand)", note: "New layout in today's look", src: "../?design=current" },

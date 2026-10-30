@@ -25,7 +25,8 @@
   #menu { max-height: calc(100vh - 52px); overflow-y: auto; position: absolute; left: 0; right: 0; top: 100%; background: #fff; box-shadow: 0 14px 30px -12px rgba(22, 1, 50, .45); border-bottom: 1px solid #e3dcf2; }
   #menu[hidden] { display: none; }
 
-  .panel { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 24px 40px; padding: 18px 16px 22px; max-width: 1100px; margin: 0 auto; }
+  .panel { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px 40px; padding: 18px 16px 22px; max-width: 1100px; margin: 0 auto; }
+  .switch { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-bottom: 16px; border-bottom: 1px solid #e3dcf2; }
   @media (max-width: 860px) { .panel { grid-template-columns: minmax(0, 1fr); } }
   .panel h2 { margin: 0; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: rgba(0,0,0,.6); }
   .hint { margin: 2px 0 10px; font-size: .8125rem; color: rgba(0,0,0,.6); }
@@ -44,11 +45,11 @@
   .chip[aria-pressed="true"] { border-color: var(--purple); background: var(--purple-10); }
   .chip[aria-pressed="true"]::before { border-color: var(--purple); background: var(--purple) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E") center / 12px no-repeat; }
 
-  nav.pages { display: grid; gap: 2px; margin-top: 10px; font-size: .875rem; }
-  nav.pages a { padding: 7px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+  nav.pages { display: inline-flex; border: 2px solid var(--purple); border-radius: 99px; overflow: hidden; font-size: .875rem; }
+  nav.pages a { padding: 7px 16px; font-weight: 700; text-decoration: none; color: var(--purple); background: #fff; }
   nav.pages a:hover { background: var(--purple-10); }
-  nav.pages a.on { background: var(--purple); color: #fff; }
-  .live { display: inline-block; margin-top: 10px; padding: 0 12px; font-size: .8125rem; }
+  nav.pages a[aria-current="page"] { background: var(--purple); color: #fff; }
+  .live { margin-left: auto; font-size: .8125rem; }
 
   main { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; align-items: flex-start; padding: 20px 16px 48px; }
   .col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
@@ -69,6 +70,14 @@
 </div>
 <div id="menu" hidden>
   <div class="panel">
+    <div class="switch">
+      <h2 id="mh-p">Page</h2>
+<nav class="pages" aria-label="Compare page">
+  <a href="../compare/">Guides homepage</a>
+  <a href="./" aria-current="page">Am I Eligible?</a>
+</nav>
+      <a class="live" href="https://www.carfinance247.co.uk/guide/am-i-eligible" target="_blank" rel="noopener">Open live /guide/am-i-eligible &#8599;</a>
+    </div>
     <section aria-labelledby="mh-v">
       <h2 id="mh-v">Versions</h2>
       <p class="hint">Tick the designs to compare</p>
@@ -79,17 +88,6 @@
       <div class="field"><span>Layout</span><div class="seg" id="mode" role="group" aria-label="Layout"><button type="button" data-v="single">Single</button><button type="button" data-v="side">Side by side</button></div></div>
       <div class="field"><span>Device</span><div class="seg" id="device" role="group" aria-label="Device size"><button type="button" data-v="mobile">Mobile 375</button><button type="button" data-v="desktop">Desktop 1280</button></div></div>
       <label class="field sync"><input type="checkbox" id="sync" checked> Sync scrolling between screens</label>
-    </section>
-    <section aria-labelledby="mh-p">
-      <h2 id="mh-p">Pages</h2>
-<nav class="pages" aria-label="Pages">
-  <a class="on" aria-current="page" href="./">Comparison</a>
-  <a href="../control-am-i-eligible/">Control page</a>
-  <a href="../wireframe-am-i-eligible/">Wireframe page</a>
-  <a href="../am-i-eligible/">New page</a>
-  <a href="../compare/">&larr; Guides homepage comparison</a>
-</nav>
-      <a class="live" href="https://www.carfinance247.co.uk/guide/am-i-eligible" target="_blank" rel="noopener">Open live /guide/am-i-eligible &#8599;</a>
     </section>
   </div>
 </div>
@@ -220,6 +218,7 @@
     renderChips();
     renderCols();
     $("showing").textContent = VARIANTS.filter((v) => state.sel.includes(v.id)).map((v) => v.title).join(" · ") + " · " + (state.device === "mobile" ? "Mobile" : "Desktop");
+    carry();
     if (!first) persist();
   }
 
@@ -232,6 +231,12 @@
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
   document.addEventListener("click", (e) => { if (!menu.hidden && !e.target.closest(".topwrap")) setMenu(false); });
   addEventListener("blur", () => { if (document.activeElement && document.activeElement.tagName === "IFRAME") setMenu(false); }); // a click inside a frame
+  const carry = () => document.querySelectorAll("nav.pages a").forEach((a) => {
+    const u = new URL(a.getAttribute("href"), location.href);
+    ["mode", "device"].forEach((k) => { u.searchParams.delete(k); if (state[k] !== (k === "mode" ? "side" : "mobile")) u.searchParams.set(k, state[k]); });
+    a.href = u;
+  });
+  carry();
   let t;
   addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => { const keep = document.scrollingElement.scrollTop; renderCols(); document.scrollingElement.scrollTop = keep; }, 150); });
   let first = true;

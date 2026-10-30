@@ -139,12 +139,9 @@ ${sprite}
 
 // ---- Compare page ----
 const fill = (tpl, v) => Object.entries(v).reduce((t, [k, val]) => t.split("__" + k + "__").join(val), tpl);
-const nav = `<nav class="pages" aria-label="Pages">
-  <a class="on" aria-current="page" href="./">Comparison</a>
-  <a href="../control-am-i-eligible/">Control page</a>
-  <a href="../wireframe-am-i-eligible/">Wireframe page</a>
-  <a href="../am-i-eligible/">New page</a>
-  <a href="../compare/">&larr; Guides homepage comparison</a>
+const nav = `<nav class="pages" aria-label="Compare page">
+  <a href="../compare/">Guides homepage</a>
+  <a href="./" aria-current="page">Am I Eligible?</a>
 </nav>`;
 const compare = fill(fs.readFileSync("tools/compare-template.html", "utf8"), {
   BASE, TITLE: "Am I Eligible? redesign comparison", NAV: nav, LIVE_URL: BASE + "/guide/am-i-eligible", LIVE_PATH: "/guide/am-i-eligible",
