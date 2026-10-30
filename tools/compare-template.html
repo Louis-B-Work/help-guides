@@ -8,6 +8,7 @@
 <style>
   :root { --purple: #6905F2; --purple-10: #F0E6FE; --purple-30: #D2B4FB; --page: #ECE6F7; --lime: #8EF205; }
   * { box-sizing: border-box; }
+  html { overflow-y: scroll; } /* always reserve the scrollbar so the column maths does not change after the frames load */
   body { margin: 0; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 15px; background: var(--page); color: #000; }
   a { color: var(--purple); }
   button { font: inherit; cursor: pointer; }
@@ -33,8 +34,8 @@
   .chip[aria-pressed="true"] { border-color: var(--purple); background: var(--purple-10); opacity: 1; }
 
   main { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; align-items: flex-start; padding: 20px 16px 48px; }
-  .col { display: grid; gap: 6px; }
-  .cap { display: flex; align-items: baseline; gap: 10px; justify-content: space-between; }
+  .col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .cap { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; justify-content: space-between; }
   .cap h2 { margin: 0; font-size: .9375rem; }
   .cap a { font-size: .8125rem; text-decoration: none; }
   .cap a:hover { text-decoration: underline; }
@@ -46,6 +47,7 @@
 <nav class="pages" aria-label="Pages">
   <a class="on" href="./" aria-current="page">Comparison</a>
   <a href="../control/">Control page</a>
+  <a href="../wireframe/">Wireframe page</a>
   <a href="../">New page</a>
 </nav>
 <header class="bar">
@@ -65,7 +67,8 @@
   const VARIANTS = [
     { id: "control", title: "Control (live)", note: "Replica of today's /guides", src: "../control/" },
     { id: "current", title: "Redesign (current brand)", note: "New layout in today's look", src: "../?design=current" },
-    { id: "redesign", title: "Redesign (new brand)", note: "New layout in the new brand guidelines", src: "../?design=redesign" }
+    { id: "redesign", title: "Redesign (new brand)", note: "New layout in the new brand guidelines", src: "../?design=redesign" },
+    { id: "wireframe", title: "SEO wireframe (PDF)", note: "Layout from the UX recommendations PDF", src: "../wireframe/" }
   ];
   const DEFAULT_SEL = "control,current"; // shown on a plain load: control (live) next to the redesign in the current brand
   const $ = (id) => document.getElementById(id);
@@ -129,7 +132,7 @@
     const shown = VARIANTS.filter((v) => state.sel.includes(v.id));
     cols.replaceChildren();
     const [w] = SIZES[state.device];
-    const avail = window.innerWidth - 32 - 24 * (shown.length - 1);
+    const avail = document.documentElement.clientWidth - 32 - 24 * (shown.length - 1) - 4; // clientWidth excludes the scrollbar
     const s = Math.min(1, avail / shown.length / w);
     // Fit the frame height to what is left of the window below the toolbar, so the page (and its sticky search bar at the
     // bottom) is fully visible without scrolling the comparison page. The iframe viewport is taller by 1/s when scaled down.
