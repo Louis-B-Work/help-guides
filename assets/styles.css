@@ -207,3 +207,8 @@ html:not([data-design="redesign"]) {
 .cog-link { display: block; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, .2); font-size: .8125rem; font-weight: 600; color: #8EF205; text-decoration: none; }
 .cog-link:hover { text-decoration: underline; }
 .cog[hidden] { display: none; }
+
+/* Current styling: the page title stays on one line on phones (redesign mode sets its own size) */
+@media (max-width: 639px) {
+  html:not([data-design="redesign"]) #page-title { font-size: clamp(1.6rem, 8.6vw, 2.25rem); white-space: nowrap; }
+}
